@@ -1,0 +1,219 @@
+/* Стилі для HomePage */
+
+/* Прибираємо крапки зі списків */
+ul, ol {
+  list-style: none;
+  padding-left: 0;
+}
+
+.container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.hero {
+  text-align: center;
+  padding: 40px 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 16px;
+  margin-bottom: 40px;
+  color: white;
+}
+
+.heroTitle {
+  font-size: 48px;
+  margin: 0 0 16px 0;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.logoIcon {
+  font-size: 56px;
+}
+
+.badge {
+  font-size: 18px;
+  padding: 6px 16px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  font-weight: normal;
+}
+
+.heroSubtitle {
+  font-size: 20px;
+  margin: 0;
+  opacity: 0.9;
+}
+
+.quickOverview {
+  margin-bottom: 40px;
+}
+
+.sectionTitle {
+  font-size: 28px;
+  margin-bottom: 24px;
+  color: #282c34;
+}
+
+.featuresGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.featureCard {
+  padding: 24px;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.featureIcon {
+  font-size: 40px;
+  margin-bottom: 12px;
+}
+
+.featureTitle {
+  font-size: 20px;
+  margin: 0 0 8px 0;
+  color: #282c34;
+}
+
+.featureDesc {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #6c757d;
+  margin: 0;
+}
+
+.stats {
+  margin-bottom: 40px;
+  padding: 32px;
+  background-color: #f8f9fa;
+  border-radius: 16px;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.statCard {
+  text-align: center;
+  padding: 24px;
+  background-color: white;
+  border-radius: 12px;
+}
+
+.statValue {
+  font-size: 36px;
+  font-weight: bold;
+  color: #61dafb;
+  margin-bottom: 8px;
+}
+
+.statLabel {
+  font-size: 14px;
+  color: #6c757d;
+}
+
+.whyUpgrade {
+  margin-bottom: 40px;
+}
+
+.reasonsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.reasonCard {
+  padding: 24px;
+  background-color: #e7f7ff;
+  border-radius: 12px;
+  border-left: 4px solid #61dafb;
+}
+
+.reasonIcon {
+  font-size: 32px;
+  margin-bottom: 12px;
+}
+
+.reasonTitle {
+  font-size: 18px;
+  margin: 0 0 8px 0;
+  color: #282c34;
+}
+
+.reasonText {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #495057;
+  margin: 0;
+}
+
+.navigation {
+  margin-bottom: 40px;
+  padding: 32px;
+  background-color: #fff3cd;
+  border-radius: 16px;
+}
+
+.instructionsList {
+  font-size: 16px;
+  line-height: 2;
+  color: #856404;
+  margin-bottom: 0;
+}
+
+.instruction {
+  margin-bottom: 8px;
+}
+
+.links {
+  margin-bottom: 40px;
+}
+
+.linksGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 12px;
+}
+
+.link {
+  display: block;
+  padding: 16px;
+  background-color: white;
+  border-radius: 8px;
+  text-decoration: none;
+  color: #282c34;
+  border: 2px solid #dee2e6;
+  transition: all 0.2s;
+  font-size: 14px;
+}
+
+.link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-color: #61dafb;
+}
+
+.footer {
+  text-align: center;
+  padding: 24px;
+  background-color: #282c34;
+  border-radius: 12px;
+  color: white;
+}
+
+.footerText {
+  margin: 8px 0;
+  font-size: 14px;
+  opacity: 0.9;
+}

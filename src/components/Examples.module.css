@@ -1,0 +1,1110 @@
+/* Повний набір стилів для компонентів-прикладів React 19 */
+
+/* Прибираємо крапки зі всіх списків */
+ul, ol {
+  list-style: none;
+  padding-left: 0;
+}
+
+/* === Контейнери === */
+.container {
+  padding: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.containerWide {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* === Заголовки === */
+.title {
+  font-size: 32px;
+  margin-bottom: 12px;
+  color: #282c34;
+}
+
+.sectionTitle {
+  font-size: 20px;
+  margin-bottom: 16px;
+  color: #282c34;
+}
+
+.subsectionTitle {
+  font-size: 16px;
+  margin-bottom: 12px;
+  color: #495057;
+}
+
+.description {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #6c757d;
+  margin-bottom: 24px;
+  padding: 16px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border-left: 4px solid #61dafb;
+}
+
+/* === Секції === */
+.section {
+  margin-bottom: 24px;
+  padding: 20px;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.explanation {
+  padding: 20px;
+  background-color: #fff3cd;
+  border-radius: 12px;
+  border: 2px solid #ffc107;
+  margin-bottom: 24px;
+}
+
+.explanationTitle {
+  margin-top: 0;
+  margin-bottom: 16px;
+  color: #856404;
+}
+
+.benefits {
+  padding: 20px;
+  background-color: #d4edda;
+  border-radius: 12px;
+  margin-bottom: 24px;
+}
+
+.notes {
+  padding: 20px;
+  background-color: #f8d7da;
+  border-radius: 12px;
+  margin-bottom: 24px;
+}
+
+.notesList {
+  margin-bottom: 0;
+  line-height: 1.8;
+  color: #721c24;
+  list-style: none;
+  padding-left: 0;
+}
+
+/* === Порівняння === */
+.comparison {
+  margin-bottom: 24px;
+}
+
+.comparisonGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.comparisonItem {
+  padding: 16px;
+  background-color: #f8f9fa;
+  borderRadius: 12px;
+}
+
+.comparisonCard {
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 12px;
+}
+
+.comparisonTitle {
+  font-size: 18px;
+  margin-bottom: 12px;
+}
+
+.comparisonNote {
+  font-size: 13px;
+}
+
+.comparisonList {
+  margin-top: 8px;
+  margin-bottom: 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+.comparisonTable {
+  margin-bottom: 24px;
+}
+
+/* === Форми === */
+.form {
+  padding: 24px;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 24px;
+}
+
+.formGroup {
+  margin-bottom: 16px;
+}
+
+.fieldGroup {
+  margin-bottom: 16px;
+}
+
+.label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #282c34;
+}
+
+.input {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border: 2px solid #dee2e6;
+  border-radius: 8px;
+  box-sizing: border-box;
+  transition: border-color 0.2s;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #61dafb;
+}
+
+.input:disabled {
+  background-color: #f8f9fa;
+  color: #6c757d;
+  cursor: not-allowed;
+}
+
+.inputError {
+  border-color: #dc3545;
+}
+
+.inputDisabled {
+  background-color: #f8f9fa;
+  color: #6c757d;
+  cursor: not-allowed;
+}
+
+.textarea {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border: 2px solid #dee2e6;
+  border-radius: 8px;
+  min-height: 100px;
+  box-sizing: border-box;
+  resize: vertical;
+}
+
+.error {
+  display: block;
+  margin-top: 4px;
+  font-size: 12px;
+  color: #dc3545;
+}
+
+.disabledBadge {
+  font-size: 12px;
+  padding: 2px 8px;
+  background-color: #fff3cd;
+  color: #856404;
+  border-radius: 4px;
+}
+
+/* === Кнопки === */
+.button {
+  width: 100%;
+  padding: 16px;
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  background-color: #61dafb;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.button:hover:not(:disabled) {
+  background-color: #4fc3f7;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(97, 218, 251, 0.3);
+}
+
+.button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.buttonDisabled {
+  background-color: #adb5bd;
+  cursor: not-allowed;
+}
+
+.addButton {
+  padding: 14px 24px;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  background-color: #61dafb;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 12px;
+}
+
+.submitButton {
+  width: 100%;
+  padding: 16px;
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  background-color: #61dafb;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.demoButton {
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: bold;
+  color: white;
+  background-color: #61dafb;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.customButton {
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  background-color: #28a745;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.deleteButton {
+  padding: 8px 12px;
+  background-color: #f8d7da;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.inputGroup {
+  margin-bottom: 16px;
+}
+
+.buttonGroup {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+/* === Повідомлення === */
+.message {
+  margin-top: 16px;
+  padding: 16px;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.messageSuccess {
+  background-color: #d4edda;
+  color: #155724;
+  border: 2px solid #c3e6cb;
+}
+
+.messageError {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 2px solid #f5c6cb;
+}
+
+.messageData {
+  margin-top: 12px;
+  padding: 12px;
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.result {
+  margin-top: 16px;
+  padding: 16px;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.resultSuccess {
+  background-color: #d4edda;
+  color: #155724;
+  border: 2px solid #c3e6cb;
+}
+
+.resultError {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 2px solid #f5c6cb;
+}
+
+/* === Код === */
+.code {
+  font-size: 12px;
+  line-height: 1.5;
+  overflow: auto;
+  background-color: #282c34;
+  color: #61dafb;
+  padding: 12px;
+  border-radius: 4px;
+  font-family: 'Monaco', 'Menlo', 'Courier New', monospace;
+  margin: 0;
+}
+
+.codeBlock {
+  margin-bottom: 16px;
+  padding: 16px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+}
+
+.codeTitle {
+  font-size: 16px;
+  margin-bottom: 8px;
+  color: #495057;
+}
+
+.codeExamples {
+  margin-bottom: 24px;
+}
+
+/* === Списки === */
+.list {
+  margin-bottom: 0;
+  line-height: 1.8;
+  color: #155724;
+  list-style: none;
+  padding-left: 0;
+}
+
+.instructionsList {
+  font-size: 16px;
+  line-height: 2;
+  color: #856404;
+  margin-bottom: 0;
+  list-style: none;
+  padding-left: 0;
+}
+
+.instruction {
+  margin-bottom: 8px;
+}
+
+/* === Todos === */
+.todoForm {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+  align-items: flex-start;
+}
+
+.todoForm .input {
+  flex: 1;
+}
+
+.todoForm .addButton {
+  margin-top: 0;
+  flex-shrink: 0;
+}
+
+.todoList {
+  margin-bottom: 24px;
+}
+
+.todoItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  background-color: white;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: opacity 0.3s;
+}
+
+.todoContent {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.todoText {
+  font-size: 16px;
+  color: #282c34;
+}
+
+.pendingBadge {
+  font-size: 12px;
+  padding: 4px 8px;
+  background-color: #fff3cd;
+  color: #856404;
+  border-radius: 4px;
+}
+
+.emptyState {
+  text-align: center;
+  padding: 40px;
+  color: #adb5bd;
+  font-size: 16px;
+}
+
+/* === User Profile === */
+.profileCard {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+}
+
+.avatar {
+  font-size: 48px;
+}
+
+.userName {
+  margin: 0 0 4px 0;
+  font-size: 18px;
+  color: #282c34;
+}
+
+.userEmail {
+  margin: 0;
+  font-size: 14px;
+  color: #6c757d;
+}
+
+/* === Posts === */
+.postsList {
+  display: grid;
+  gap: 12px;
+}
+
+.postCard {
+  padding: 16px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border-left: 4px solid #61dafb;
+}
+
+.postTitle {
+  margin: 0 0 8px 0;
+  font-size: 16px;
+  color: #282c34;
+}
+
+.postContent {
+  margin: 0 0 12px 0;
+  font-size: 14px;
+  color: #6c757d;
+}
+
+.postMeta {
+  display: flex;
+  gap: 16px;
+  font-size: 14px;
+  color: #495057;
+}
+
+/* === Controls === */
+.controls {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.controls .label {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  font-weight: normal;
+  flex-shrink: 0;
+  flex-grow: 1;
+}
+
+.controls .button {
+  width: auto;
+  flex-shrink: 0;
+  padding: 8px 16px;
+  height: auto;
+  font-size: 14px;
+}
+
+.select {
+  padding: 8px 32px 8px 12px;
+  font-size: 14px;
+  border: 2px solid #dee2e6;
+  border-radius: 6px;
+  background-color: white;
+  cursor: pointer;
+  width: auto;
+  min-width: 220px;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3e%3cpath fill='%23495057' d='M6 8L0 0h12z'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 10px;
+  flex-grow: 1;
+}
+
+.select:focus {
+  outline: none;
+  border-color: #61dafb;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3e%3cpath fill='%2361dafb' d='M6 8L0 0h12z'/%3e%3c/svg%3e");
+}
+
+.select:disabled {
+  background-color: #f8f9fa;
+  cursor: not-allowed;
+  color: #6c757d;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3e%3cpath fill='%23adb5bd' d='M6 8L0 0h12z'/%3e%3c/svg%3e");
+}
+
+.checkbox {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-bottom: 16px;
+}
+
+.checkboxGroup {
+  margin-bottom: 20px;
+}
+
+.textDisabled {
+  color: #6c757d;
+}
+
+/* === Context Example === */
+.contextExample {
+  padding: 16px;
+  background-color: #e7f7ff;
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+/* === Data Container === */
+.dataContainer {
+  display: grid;
+  gap: 20px;
+}
+
+.placeholder {
+  padding: 40px;
+  text-align: center;
+  color: #adb5bd;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+/* === Loading === */
+.loading {
+  padding: 40px;
+  text-align: center;
+  color: #6c757d;
+}
+
+.spinner {
+  font-size: 48px;
+  margin-bottom: 12px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* === Cards === */
+.card {
+  padding: 20px;
+  background-color: #e7f7ff;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  border: 2px solid #61dafb;
+}
+
+.cardTitle {
+  margin: 0 0 8px 0;
+  font-size: 18px;
+  color: #282c34;
+}
+
+.cardContent {
+  margin: 0;
+  font-size: 14px;
+  color: #495057;
+  line-height: 1.6;
+}
+
+/* === Use Cases === */
+.useCases {
+  margin-bottom: 24px;
+  padding: 20px;
+  background-color: #fff3cd;
+  border-radius: 12px;
+}
+
+.useCaseGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 16px;
+}
+
+.useCase {
+  padding: 16px;
+  background-color: white;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.useCaseIcon {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.useCaseTitle {
+  margin: 0 0 8px 0;
+  font-size: 16px;
+  color: #282c34;
+}
+
+.useCaseDesc {
+  margin: 0;
+  font-size: 13px;
+  color: #6c757d;
+  line-height: 1.5;
+}
+
+/* === Steps === */
+.steps {
+  display: grid;
+  gap: 12px;
+}
+
+.step {
+  display: flex;
+  gap: 16px;
+  padding: 16px;
+  background-color: white;
+  border-radius: 8px;
+}
+
+.stepNumber {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background-color: #61dafb;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.stepDesc {
+  margin: 4px 0 0 0;
+  font-size: 14px;
+  color: #6c757d;
+}
+
+/* === How It Works === */
+.howItWorks {
+  margin-bottom: 24px;
+  padding: 20px;
+  background-color: #e7f7ff;
+  border-radius: 12px;
+}
+
+/* === Demo === */
+.demo {
+  margin-bottom: 24px;
+  padding: 20px;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.demoDescription {
+  font-size: 14px;
+  color: #6c757d;
+  margin-bottom: 16px;
+}
+
+.demoSection {
+  margin-bottom: 24px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #dee2e6;
+}
+
+/* === Status Indicator === */
+.statusIndicator {
+  margin-bottom: 20px;
+  padding: 16px;
+  background-color: #fff3cd;
+  border-radius: 8px;
+  border: 2px solid #ffc107;
+}
+
+.statusHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  color: #856404;
+}
+
+.statusIcon {
+  font-size: 20px;
+}
+
+.statusDetails {
+  font-size: 12px;
+  color: #856404;
+}
+
+.statusData {
+  margin-top: 8px;
+  padding: 8px;
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 4px;
+  font-size: 11px;
+}
+
+/* === API Section === */
+.apiSection {
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 12px;
+}
+
+/* === Tables === */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  background-color: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.th {
+  padding: 12px;
+  text-align: left;
+  background-color: #282c34;
+  color: white;
+  font-weight: bold;
+}
+
+.td {
+  padding: 12px;
+  border-bottom: 1px solid #dee2e6;
+}
+
+/* === Debug Info === */
+.debugInfo {
+  margin-top: 12px;
+  padding: 12px;
+  background-color: #f8f9fa;
+  border-radius: 6px;
+  font-size: 12px;
+  font-family: monospace;
+}
+
+/* === Metadata Example === */
+.pageNav {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.navButton {
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: bold;
+  border: 2px solid #dee2e6;
+  border-radius: 6px;
+  background-color: white;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.navButton:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.navButtonActive {
+  border-color: #61dafb;
+  background-color: #e7f7ff;
+}
+
+.pageContainer {
+  min-height: 200px;
+}
+
+.pageContent {
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+}
+
+.pageTitle {
+  font-size: 24px;
+  margin-bottom: 12px;
+  color: #282c34;
+}
+
+.pageText {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #495057;
+  margin-bottom: 16px;
+}
+
+.metaInfo {
+  padding: 16px;
+  background-color: white;
+  border-radius: 8px;
+  font-size: 13px;
+}
+
+.metaList {
+  margin-top: 8px;
+  margin-bottom: 0;
+  line-height: 1.8;
+  color: #495057;
+  list-style: none;
+  padding-left: 0;
+}
+
+.supportedTags {
+  margin-bottom: 24px;
+  padding: 20px;
+  background-color: #fff3cd;
+  border-radius: 12px;
+}
+
+.tagsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+}
+
+.tagCard {
+  padding: 16px;
+  background-color: white;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.tagIcon {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.tagTitle {
+  margin: 0 0 8px 0;
+  font-size: 14px;
+  color: #282c34;
+}
+
+.tagDesc {
+  margin: 0;
+  font-size: 12px;
+  color: #6c757d;
+}
+
+.exampleCard {
+  margin-bottom: 16px;
+  padding: 16px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+}
+
+.exampleTitle {
+  font-size: 16px;
+  margin-bottom: 8px;
+  color: #282c34;
+}
+
+.examples {
+  margin-bottom: 24px;
+}
+
+/* === Final Form Comparison === */
+.formExample {
+  padding: 20px;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.formTitle {
+  font-size: 18px;
+  margin-bottom: 16px;
+  color: #282c34;
+}
+
+.formsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.whenToUse {
+  margin-bottom: 24px;
+}
+
+.whenToUseGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.whenCard {
+  padding: 20px;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.whenTitle {
+  font-size: 20px;
+  margin-bottom: 8px;
+  color: #282c34;
+}
+
+.whenSubtitle {
+  font-size: 14px;
+  margin-bottom: 12px;
+  color: #6c757d;
+}
+
+.whenList {
+  margin-bottom: 0;
+  padding-left: 0;
+  line-height: 1.8;
+  list-style: none;
+}
+
+.migration {
+  margin-bottom: 24px;
+  padding: 20px;
+  background-color: #e7f7ff;
+  border-radius: 12px;
+}
+
+.migrationSteps {
+  display: grid;
+  gap: 12px;
+}
+
+.conclusion {
+  padding: 20px;
+  background-color: #d4edda;
+  border-radius: 12px;
+  border: 2px solid #c3e6cb;
+}
+
+.conclusionText {
+  font-size: 15px;
+  line-height: 1.7;
+  color: #155724;
+  margin-bottom: 12px;
+}
+
+/* === Problem/Solution Sections === */
+.problemSection {
+  margin-bottom: 16px;
+  padding: 20px;
+  background-color: #f8d7da;
+  border-radius: 12px;
+}
+
+.solutionSection {
+  margin-bottom: 24px;
+  padding: 20px;
+  background-color: #d4edda;
+  border-radius: 12px;
+}
+
+.problemText {
+  margin-bottom: 12px;
+  line-height: 1.6;
+}
+
+.solutionText {
+  margin-bottom: 12px;
+  line-height: 1.6;
+}
+
+/* === Responsive === */
+@media (max-width: 768px) {
+  .comparisonGrid,
+  .formsGrid,
+  .whenToUseGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .container,
+  .containerWide {
+    padding: 12px;
+  }
+  
+  .title {
+    font-size: 24px;
+  }
+  
+  .sectionTitle {
+    font-size: 18px;
+  }
+}
