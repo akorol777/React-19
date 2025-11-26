@@ -1,89 +1,103 @@
+import { use } from 'react';
+import { LanguageContext } from '../contexts/LanguageContext';
 import styles from './HomePage.module.css';
 
-// Головна сторінка з оглядом нових фіч React 19
+// Home page with overview of new React 19 features
 export const HomePage = () => {
+  const langContext = use(LanguageContext);
+  if (!langContext) throw new Error('LanguageContext not found');
+  
+  const { t } = langContext;
+
   return (
     <div className={styles.container}>
       <div className={styles.hero}>
         <h1 className={styles.heroTitle}>
           <span className={styles.logoIcon}>⚛️</span>
-          React 19
-          <span className={styles.badge}>Новинки</span>
+          {t.home.title}
         </h1>
         <p className={styles.heroSubtitle}>
-          Огляд нових можливостей та переваг React 19
+          {t.home.subtitle}
         </p>
       </div>
 
-      {/* Швидкий огляд */}
+      {/* Quick overview */}
       <div className={styles.quickOverview}>
-        <h2 className={styles.sectionTitle}>🎯 Що нового?</h2>
+        <h2 className={styles.sectionTitle}>🎯 {t.home.whatsNew}</h2>
         <div className={styles.featuresGrid}>
           <div className={styles.featureCard}>
             <div className={styles.featureIcon}>⚡</div>
-            <h3 className={styles.featureTitle}>Actions API</h3>
+            <h3 className={styles.featureTitle}>{t.home.features.actions.title}</h3>
             <p className={styles.featureDesc}>
-              Новий спосіб обробки асинхронних операцій без зайвого бойлерплейту
+              {t.home.features.actions.description}
             </p>
           </div>
 
           <div className={styles.featureCard}>
             <div className={styles.featureIcon}>🚀</div>
-            <h3 className={styles.featureTitle}>useOptimistic</h3>
+            <h3 className={styles.featureTitle}>{t.home.features.optimistic.title}</h3>
             <p className={styles.featureDesc}>
-              Оптимістичні оновлення UI для миттєвого фідбеку користувачу
+              {t.home.features.optimistic.description}
             </p>
           </div>
 
           <div className={styles.featureCard}>
             <div className={styles.featureIcon}>🎣</div>
-            <h3 className={styles.featureTitle}>use() хук</h3>
+            <h3 className={styles.featureTitle}>{t.home.features.use.title}</h3>
             <p className={styles.featureDesc}>
-              Універсальний хук для промісів та контексту, можна викликати умовно!
+              {t.home.features.use.description}
             </p>
           </div>
 
           <div className={styles.featureCard}>
             <div className={styles.featureIcon}>📊</div>
-            <h3 className={styles.featureTitle}>useFormStatus</h3>
+            <h3 className={styles.featureTitle}>{t.home.features.formStatus.title}</h3>
             <p className={styles.featureDesc}>
-              Статус форми доступний з будь-якого дочірнього компонента
+              {t.home.features.formStatus.description}
             </p>
           </div>
 
           <div className={styles.featureCard}>
             <div className={styles.featureIcon}>🎯</div>
-            <h3 className={styles.featureTitle}>ref без forwardRef</h3>
+            <h3 className={styles.featureTitle}>{t.home.features.ref.title}</h3>
             <p className={styles.featureDesc}>
-              ref тепер звичайний проп, не потрібен forwardRef wrapper
+              {t.home.features.ref.description}
             </p>
           </div>
 
           <div className={styles.featureCard}>
             <div className={styles.featureIcon}>📄</div>
-            <h3 className={styles.featureTitle}>Document Metadata</h3>
+            <h3 className={styles.featureTitle}>{t.home.features.metadata.title}</h3>
             <p className={styles.featureDesc}>
-              Керуйте title та meta tags прямо в компонентах без react-helmet
+              {t.home.features.metadata.description}
+            </p>
+          </div>
+
+          <div className={styles.featureCard}>
+            <div className={styles.featureIcon}>🔥</div>
+            <h3 className={styles.featureTitle}>{t.home.features.compiler.title}</h3>
+            <p className={styles.featureDesc}>
+              {t.home.features.compiler.description}
             </p>
           </div>
         </div>
       </div>
 
-      {/* Статистика покращень */}
+      {/* Improvements stats */}
       <div className={styles.stats}>
-        <h2 className={styles.sectionTitle}>📈 Покращення</h2>
+        <h2 className={styles.sectionTitle}>📈 {t.home.improvements}</h2>
         <div className={styles.statsGrid}>
           <div className={styles.statCard}>
             <div className={styles.statValue}>-50%</div>
-            <div className={styles.statLabel}>Менше коду для форм</div>
+            <div className={styles.statLabel}>{t.home.stats.lessCode}</div>
           </div>
           <div className={styles.statCard}>
             <div className={styles.statValue}>0ms</div>
-            <div className={styles.statLabel}>Затримка з useOptimistic</div>
+            <div className={styles.statLabel}>{t.home.stats.noDelay}</div>
           </div>
           <div className={styles.statCard}>
             <div className={styles.statValue}>-17kb</div>
-            <div className={styles.statLabel}>Без react-helmet</div>
+            <div className={styles.statLabel}>{t.home.stats.noHelmet}</div>
           </div>
           <div className={styles.statCard}>
             <div className={styles.statValue}>100%</div>
@@ -92,85 +106,85 @@ export const HomePage = () => {
         </div>
       </div>
 
-      {/* Чому варто оновлюватись */}
+      {/* Why upgrade */}
       <div className={styles.whyUpgrade}>
-        <h2 className={styles.sectionTitle}>💡 Чому варто оновлюватись?</h2>
+        <h2 className={styles.sectionTitle}>💡 {t.home.whyUpgrade}</h2>
         <div className={styles.reasonsGrid}>
           <div className={styles.reasonCard}>
             <div className={styles.reasonIcon}>✨</div>
-            <h3 className={styles.reasonTitle}>Менше бойлерплейту</h3>
+            <h3 className={styles.reasonTitle}>{t.home.reasons.lessBoilerplate.title}</h3>
             <p className={styles.reasonText}>
-              Actions, ref як проп, вбудовані meta tags - все це зменшує кількість коду
+              {t.home.reasons.lessBoilerplate.description}
             </p>
           </div>
 
           <div className={styles.reasonCard}>
             <div className={styles.reasonIcon}>🎨</div>
-            <h3 className={styles.reasonTitle}>Кращий UX</h3>
+            <h3 className={styles.reasonTitle}>{t.home.reasons.betterUX.title}</h3>
             <p className={styles.reasonText}>
-              useOptimistic дає миттєвий фідбек, додаток відчувається швидшим
+              {t.home.reasons.betterUX.description}
             </p>
           </div>
 
           <div className={styles.reasonCard}>
             <div className={styles.reasonIcon}>📦</div>
-            <h3 className={styles.reasonTitle}>Менший бандл</h3>
+            <h3 className={styles.reasonTitle}>{t.home.reasons.smallerBundle.title}</h3>
             <p className={styles.reasonText}>
-              Можна прибрати залежності: react-helmet, деякі form бібліотеки
+              {t.home.reasons.smallerBundle.description}
             </p>
           </div>
 
           <div className={styles.reasonCard}>
             <div className={styles.reasonIcon}>🚀</div>
-            <h3 className={styles.reasonTitle}>Готовність до майбутнього</h3>
+            <h3 className={styles.reasonTitle}>{t.home.reasons.futureReady.title}</h3>
             <p className={styles.reasonText}>
-              React Server Components, Streaming SSR - все працює out of the box
+              {t.home.reasons.futureReady.description}
             </p>
           </div>
 
           <div className={styles.reasonCard}>
             <div className={styles.reasonIcon}>🔧</div>
-            <h3 className={styles.reasonTitle}>Простіша підтримка</h3>
+            <h3 className={styles.reasonTitle}>{t.home.reasons.easierMaintenance.title}</h3>
             <p className={styles.reasonText}>
-              Менше магії, більше передбачуваності, простіше для нових розробників
+              {t.home.reasons.easierMaintenance.description}
             </p>
           </div>
 
           <div className={styles.reasonCard}>
             <div className={styles.reasonIcon}>⚡</div>
-            <h3 className={styles.reasonTitle}>Кращий DX</h3>
+            <h3 className={styles.reasonTitle}>{t.home.reasons.betterDX.title}</h3>
             <p className={styles.reasonText}>
-              Простіша типізація, менше обгорток, інтуїтивніший API
+              {t.home.reasons.betterDX.description}
             </p>
           </div>
         </div>
       </div>
 
-      {/* Навігація по прикладах */}
+      {/* Navigation through examples */}
       <div className={styles.navigation}>
-        <h2 className={styles.sectionTitle}>🧭 Як користуватись цим демо?</h2>
+        <h2 className={styles.sectionTitle}>🧭 {t.home.howToUse}</h2>
         <ol className={styles.instructionsList}>
           <li className={styles.instruction}>
-            <strong>Виберіть приклад</strong> з меню вгорі
+            {t.home.instructions.step1}
           </li>
           <li className={styles.instruction}>
-            <strong>Читайте пояснення</strong> та порівняння з React 18
+            {t.home.instructions.step2}
           </li>
           <li className={styles.instruction}>
-            <strong>Взаємодійте</strong> з інтерактивними прикладами
+            {t.home.instructions.step3}
           </li>
           <li className={styles.instruction}>
-            <strong>Дивіться в консоль</strong> - там багато логів для розуміння
+            {t.home.instructions.step4}
           </li>
           <li className={styles.instruction}>
-            <strong>Читайте код</strong> - він добре прокоментований
+            {t.home.instructions.step5}
           </li>
         </ol>
       </div>
 
-      {/* Корисні посилання */}
+      {/* Useful links */}
       <div className={styles.links}>
-        <h2 className={styles.sectionTitle}>🔗 Корисні посилання</h2>
+        <h2 className={styles.sectionTitle}>🔗 {t.home.usefulLinks}</h2>
         <div className={styles.linksGrid}>
           <a
             href="https://react.dev/blog/2024/12/05/react-19"
@@ -178,7 +192,7 @@ export const HomePage = () => {
             rel="noopener noreferrer"
             className={styles.link}
           >
-            📰 Офіційний анонс React 19
+            {t.home.links.officialAnnouncement}
           </a>
           <a
             href="https://react.dev/reference/react"
@@ -186,7 +200,7 @@ export const HomePage = () => {
             rel="noopener noreferrer"
             className={styles.link}
           >
-            📚 React 19 Documentation
+            {t.home.links.documentation}
           </a>
           <a
             href="https://react.dev/reference/react-dom/hooks"
@@ -194,7 +208,7 @@ export const HomePage = () => {
             rel="noopener noreferrer"
             className={styles.link}
           >
-            🎣 Нові хуки в React 19
+            {t.home.links.newHooks}
           </a>
           <a
             href="https://19.react.dev/blog/2024/04/25/react-19-upgrade-guide"
@@ -202,7 +216,7 @@ export const HomePage = () => {
             rel="noopener noreferrer"
             className={styles.link}
           >
-            🚀 Гайд по оновленню
+            {t.home.links.upgradeGuide}
           </a>
         </div>
       </div>
@@ -210,10 +224,10 @@ export const HomePage = () => {
       {/* Footer */}
       <div className={styles.footer}>
         <p className={styles.footerText}>
-          🎓 Цей проект створено для навчання та демонстрації нових можливостей React 19
+          {t.home.footer.description}
         </p>
         <p className={styles.footerText}>
-          💻 Відкрийте DevTools Console для детальних логів
+          {t.home.footer.consoleNote}
         </p>
       </div>
     </div>

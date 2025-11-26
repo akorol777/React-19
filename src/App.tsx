@@ -10,15 +10,15 @@ import { RefExample } from './components/RefExample';
 import { MetadataExample } from './components/MetadataExample';
 import { FinalFormComparison } from './components/FinalFormComparison';
 
-// Компонент що рендерить відповідний приклад на основі поточного вигляду
+// Component that renders the appropriate example based on current view
 const MainContent = () => {
-  // React 19: використовуємо use() для читання контексту
+  // React 19: use use() to read context
   const context = use(AppContext);
-  if (!context) throw new Error('AppContext не знайдено');
+  if (!context) throw new Error('AppContext not found');
 
   const { currentView } = context;
 
-  // Рендеримо відповідний компонент
+  // Render appropriate component
   const renderView = () => {
     switch (currentView) {
       case 'home':
@@ -49,23 +49,23 @@ const MainContent = () => {
   );
 };
 
-// Головний компонент додатку
+// Main app component
 const App = () => {
-  console.log('🚀 React 19 Demo App запущено!');
+  console.log('🚀 React 19 Demo App started!');
 
   return (
-    // React 19: Можна встановлювати meta tags прямо тут!
+    // React 19: Can set meta tags directly here!
     <>
-      <title>React 19 - Демо нових фіч</title>
-      <meta name="description" content="Інтерактивна демонстрація нових можливостей React 19" />
+      <title>React 19 - New Features Demo</title>
+      <meta name="description" content="Interactive demonstration of new React 19 features" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       
       <AppProvider>
         <div style={styles.app}>
-          {/* Навігація */}
+          {/* Navigation */}
           <Navigation />
           
-          {/* Основний контент */}
+          {/* Main content */}
           <MainContent />
         </div>
       </AppProvider>
@@ -73,7 +73,7 @@ const App = () => {
   );
 };
 
-// Стилі
+// Styles
 const styles = {
   app: {
     minHeight: '100vh',

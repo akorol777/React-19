@@ -1,37 +1,41 @@
 import { use, useOptimistic, useActionState } from 'react';
 import { AppContext } from '../contexts/AppContext';
+import { LanguageContext } from '../contexts/LanguageContext';
 import type { Todo } from '../data/mockData';
 import { saveTodo, deleteTodo } from '../data/mockData';
 import styles from './Examples.module.css';
 
-// React 19: useOptimistic - для оптимістичних оновлень UI
+// React 19: useOptimistic - for optimistic UI updates
 export const OptimisticExample = () => {
-  // Отримуємо дані з контексту
+  // Get data from context
   const context = use(AppContext);
-  if (!context) throw new Error('AppContext не знайдено');
-
+  if (!context) throw new Error('AppContext not found');
   const { todos, addTodo, removeTodo } = context;
 
-  // useOptimistic - створює оптимістичну версію стану
-  // Перший параметр - реальний стан
-  // Другий - функція, яка описує як оптимістично оновити стан
+  const langContext = use(LanguageContext);
+  if (!langContext) throw new Error('LanguageContext not found');
+  const { t } = langContext;
+
+  // useOptimistic - creates optimistic version of state
+  // First parameter - real state
+  // Second - function that describes how to optimistically update state
   const [optimisticTodos, addOptimisticTodo] = useOptimistic<
     Todo[],
     Todo
   >(
     todos,
     (state, newTodo) => {
-      console.log('🚀 Оптимістично додаємо todo:', newTodo);
+      console.log('🚀 Optimistically adding todo:', newTodo);
       return [...state, newTodo];
     }
   );
 
-  // Action для додавання todo
+  // Action for adding todo
   const [, addAction, isAdding] = useActionState(
     async (_prevState: any, formData: FormData) => {
       const text = formData.get('todo') as string;
       
-      // Створюємо новий todo з тимчасовим ID
+      // Create new todo with temporary ID
       const newTodo: Todo = {
         id: Date.now(),
         text,
@@ -39,101 +43,92 @@ export const OptimisticExample = () => {
         userId: 1,
       };
 
-      console.log('➕ Додаємо новий todo...');
+      console.log('➕ Adding new todo...');
 
-      // Оптимістично показуємо користувачу (миттєво!)
+      // Show optimistically to user (instantly!)
       addOptimisticTodo(newTodo);
 
       try {
-        // Відправляємо на "сервер"
+        // Send to "server"
         const savedTodo = await saveTodo(newTodo);
         
-        // Після успіху - оновлюємо реальний стан
+        // After success - update real state
         addTodo(savedTodo);
         
-        console.log('✅ Todo успішно додано!');
+        console.log('✅ Todo successfully added!');
         return { success: true };
       } catch (error) {
-        console.error('❌ Помилка додавання:', error);
-        // При помилці - оптимістичне оновлення автоматично відкатиться!
-        return { success: false, error: 'Помилка додавання' };
+        console.error('❌ Add error:', error);
+        // On error - optimistic update will automatically rollback!
+        return { success: false, error: 'Add error' };
       }
     },
     { success: false }
   );
 
-  // Функція для видалення todo (теж оптимістично!)
+  // Function to delete todo (also optimistic!)
   const handleDelete = async (id: number) => {
-    console.log(`🗑️ Видаляємо todo ${id} (оптимістично)`);
+    console.log(`🗑️ Deleting todo ${id} (optimistic)`);
     
-    // Миттєво прибираємо з UI
+    // Instantly remove from UI
     removeTodo(id);
 
     try {
-      // Відправляємо запит на видалення
+      // Send delete request
       await deleteTodo(id);
-      console.log('✅ Todo видалено успішно');
+      console.log('✅ Todo successfully deleted');
     } catch (error) {
-      console.error('❌ Помилка видалення:', error);
-      // У реальному додатку тут треба відкотити зміни
-      // Але для демо залишимо так
+      console.error('❌ Delete error:', error);
+      // In real app you'd need to rollback changes here
+      // But for demo we'll leave it as is
     }
   };
 
   return (
     <div className={styles.container}>
-      <h2 className={styles.title}>🚀 useOptimistic</h2>
+      <h2 className={styles.title}>🚀 {t.optimistic.title}</h2>
       
       <p className={styles.description}>
-        <strong>Що нового?</strong> Показуємо користувачу зміни <strong>миттєво</strong>, 
-        не чекаючи відповіді сервера. Якщо сервер повертає помилку - зміни автоматично відкочуються!
+        {t.optimistic.description}
       </p>
 
-      {/* Пояснення як працює */}
+      {/* Explanation of how it works */}
       <div className={styles.howItWorks}>
-        <h3 className={styles.sectionTitle}>🔄 Як це працює:</h3>
+        <h3 className={styles.sectionTitle}>{t.optimistic.howItWorks}</h3>
         <div className={styles.steps}>
           <div className={styles.step}>
             <div className={styles.stepNumber}>1</div>
             <div>
-              <strong>Користувач натискає кнопку</strong>
-              <br />
-              <small>Наприклад, додає todo або ставить лайк</small>
+              <strong>{t.optimistic.steps.step1}</strong>
             </div>
           </div>
           <div className={styles.step}>
             <div className={styles.stepNumber}>2</div>
             <div>
-              <strong>UI оновлюється миттєво</strong>
-              <br />
-              <small>Користувач бачить результат без затримки (pending state)</small>
+              <strong>{t.optimistic.steps.step2}</strong>
             </div>
           </div>
           <div className={styles.step}>
             <div className={styles.stepNumber}>3</div>
             <div>
-              <strong>Запит йде на сервер</strong>
-              <br />
-              <small>У фоні відправляється реальний запит</small>
+              <strong>{t.optimistic.steps.step3}</strong>
             </div>
           </div>
           <div className={styles.step}>
             <div className={styles.stepNumber}>4</div>
             <div>
-              <strong>Якщо OK - стан зберігається</strong>
-              <br />
-              <small>Якщо помилка - зміни автоматично відкочуються</small>
+              <strong>{t.optimistic.steps.step4}</strong>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Форма для додавання todo */}
+      {/* Form for adding todo */}
       <form action={addAction} className={styles.todoForm}>
         <input
           name="todo"
           type="text"
-          placeholder="Що потрібно зробити?"
+          placeholder={t.optimistic.todoPlaceholder}
           required
           disabled={isAdding}
           className={styles.input}
@@ -143,83 +138,82 @@ export const OptimisticExample = () => {
           disabled={isAdding}
           className={`${styles.addButton} ${isAdding ? styles.buttonDisabled : ''}`}
         >
-          {isAdding ? '⏳ Додавання...' : '+ Додати'}
+          {isAdding ? `⏳ ${t.optimistic.addingButton}` : t.optimistic.addButton}
         </button>
       </form>
 
-      {/* Список todos */}
+      {/* Todo list */}
       <div className={styles.todoList}>
-        <h3 className={styles.sectionTitle}>📝 Список завдань ({optimisticTodos.length})</h3>
+        <h3 className={styles.sectionTitle}>{t.optimistic.todoList} ({optimisticTodos.length})</h3>
         {optimisticTodos.length === 0 ? (
-          <p className={styles.emptyState}>Поки немає завдань. Додайте перше!</p>
+          <p className={styles.emptyState}>{t.optimistic.emptyState}</p>
         ) : (
           optimisticTodos.map(todo => (
             <div
               key={todo.id}
               className={styles.todoItem}
               style={{
-                // Якщо todo ще не збережено (оптимістичне), робимо прозорим
+                // If todo not yet saved (optimistic), make it transparent
                 opacity: todo.id > Date.now() - 2000 ? 0.6 : 1,
               }}
             >
               <div className={styles.todoContent}>
                 <span className={styles.todoText}>{todo.text}</span>
                 {todo.id > Date.now() - 2000 && (
-                  <span className={styles.pendingBadge}>⏳ Збереження...</span>
+                  <span className={styles.pendingBadge}>⏳ {t.optimistic.savingBadge}</span>
                 )}
               </div>
               <button
                 onClick={() => handleDelete(todo.id)}
                 className={styles.deleteButton}
-                title="Видалити"
+                title={t.optimistic.removeButton}
               >
-                🗑️
+                {t.optimistic.removeButton}
               </button>
             </div>
           ))
         )}
       </div>
 
-      {/* Пояснення переваг */}
+      {/* Explanation of benefits */}
       <div className={styles.benefits}>
-        <h3 className={styles.sectionTitle}>💡 Переваги useOptimistic:</h3>
+        <h3 className={styles.sectionTitle}>{t.optimistic.benefitsTitle}</h3>
         <ul className={styles.list}>
-          <li>✅ <strong>Миттєвий фідбек:</strong> користувач бачить зміни без затримки</li>
-          <li>✅ <strong>Кращий UX:</strong> додаток відчувається швидшим</li>
-          <li>✅ <strong>Автоматичний rollback:</strong> при помилці зміни відкочуються</li>
-          <li>✅ <strong>Менше коду:</strong> не потрібно вручну керувати тимчасовими станами</li>
-          <li>✅ <strong>Працює з Actions:</strong> ідеальна інтеграція з новим API</li>
+          <li>✅ <strong>{t.optimistic.benefitsDetailed.instantFeedback.title}</strong> {t.optimistic.benefitsDetailed.instantFeedback.description}</li>
+          <li>✅ <strong>{t.optimistic.benefitsDetailed.betterUX.title}</strong> {t.optimistic.benefitsDetailed.betterUX.description}</li>
+          <li>✅ <strong>{t.optimistic.benefitsDetailed.autoRollback.title}</strong> {t.optimistic.benefitsDetailed.autoRollback.description}</li>
+          <li>✅ <strong>{t.optimistic.benefitsDetailed.lessCode.title}</strong> {t.optimistic.benefitsDetailed.lessCode.description}</li>
+          <li>✅ <strong>{t.optimistic.benefitsDetailed.worksWithActions.title}</strong> {t.optimistic.benefitsDetailed.worksWithActions.description}</li>
         </ul>
       </div>
 
-      {/* Порівняння з React 18 */}
+      {/* Comparison with React 18 */}
       <div className={styles.comparison}>
-        <h3 className={styles.sectionTitle}>⚖️ Порівняння підходів:</h3>
+        <h3 className={styles.sectionTitle}>{t.optimistic.comparisonTitle}</h3>
         <div className={styles.comparisonGrid}>
           <div className={styles.comparisonItem}>
-            <h4 className={styles.comparisonTitle}>❌ React 18 (без оптимізму)</h4>
-            <pre className={styles.code}>{`// Користувач чекає відповіді
+            <h4 className={styles.comparisonTitle}>{t.optimistic.react18.title}</h4>
+            <pre className={styles.code}>{`${t.optimistic.react18.comment1}
 const handleAdd = async () => {
   setLoading(true);
   await addTodo(newTodo);
   setLoading(false);
-  // Тільки тепер побачить зміни
+  ${t.optimistic.react18.comment2}
 };`}</pre>
-            <p className={styles.comparisonNote}>⏱️ Затримка: 1-2 секунди</p>
+            <p className={styles.comparisonNote}>{t.optimistic.react18.delay}</p>
           </div>
 
           <div className={styles.comparisonItem}>
-            <h4 className={styles.comparisonTitle}>✅ React 19 (з оптимізмом)</h4>
-            <pre className={styles.code}>{`// Користувач бачить миттєво
+            <h4 className={styles.comparisonTitle}>{t.optimistic.react19.title}</h4>
+            <pre className={styles.code}>{`${t.optimistic.react19.comment1}
 addOptimisticTodo(newTodo);
-// У фоні йде запит
+${t.optimistic.react19.comment2}
 await addTodo(newTodo);
-// Якщо помилка - авто відкат`}</pre>
-            <p className={styles.comparisonNote}>⚡ Затримка: 0 мс!</p>
+${t.optimistic.react19.comment3}`}</pre>
+            <p className={styles.comparisonNote}>{t.optimistic.react19.delay}</p>
           </div>
         </div>
       </div>
     </div>
   );
 };
-

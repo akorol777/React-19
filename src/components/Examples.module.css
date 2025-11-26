@@ -1,12 +1,12 @@
-/* Повний набір стилів для компонентів-прикладів React 19 */
+/* Complete set of styles for React 19 example components */
 
-/* Прибираємо крапки зі всіх списків */
+/* Remove list markers from all lists */
 ul, ol {
   list-style: none;
   padding-left: 0;
 }
 
-/* === Контейнери === */
+/* === Containers === */
 .container {
   padding: 20px;
   max-width: 900px;
@@ -19,7 +19,7 @@ ul, ol {
   margin: 0 auto;
 }
 
-/* === Заголовки === */
+/* === Headings === */
 .title {
   font-size: 32px;
   margin-bottom: 12px;
@@ -49,7 +49,7 @@ ul, ol {
   border-left: 4px solid #61dafb;
 }
 
-/* === Секції === */
+/* === Sections === */
 .section {
   margin-bottom: 24px;
   padding: 20px;
@@ -94,7 +94,7 @@ ul, ol {
   padding-left: 0;
 }
 
-/* === Порівняння === */
+/* === Comparison === */
 .comparison {
   margin-bottom: 24px;
 }
@@ -137,7 +137,7 @@ ul, ol {
   margin-bottom: 24px;
 }
 
-/* === Форми === */
+/* === Forms === */
 .form {
   padding: 24px;
   background-color: white;
@@ -218,7 +218,7 @@ ul, ol {
   border-radius: 4px;
 }
 
-/* === Кнопки === */
+/* === Buttons === */
 .button {
   width: 100%;
   padding: 16px;
@@ -314,7 +314,7 @@ ul, ol {
   margin-top: 20px;
 }
 
-/* === Повідомлення === */
+/* === Messages === */
 .message {
   margin-top: 16px;
   padding: 16px;
@@ -361,7 +361,7 @@ ul, ol {
   border: 2px solid #f5c6cb;
 }
 
-/* === Код === */
+/* === Code === */
 .code {
   font-size: 12px;
   line-height: 1.5;
@@ -391,7 +391,7 @@ ul, ol {
   margin-bottom: 24px;
 }
 
-/* === Списки === */
+/* === Lists === */
 .list {
   margin-bottom: 0;
   line-height: 1.8;

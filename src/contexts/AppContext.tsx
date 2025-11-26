@@ -2,7 +2,7 @@ import { createContext, useState, type ReactNode } from 'react';
 import type { Todo, Post } from '../data/mockData';
 import { mockTodos, mockPosts } from '../data/mockData';
 
-// Типи для контексту
+// Types for context
 interface AppContextType {
   todos: Todo[];
   posts: Post[];
@@ -13,45 +13,45 @@ interface AppContextType {
   setCurrentView: (view: string) => void;
 }
 
-// Створюємо контекст - новий підхід React 19, можна використовувати з use()
+// Create context - new React 19 approach, can be used with use()
 export const AppContext = createContext<AppContextType | null>(null);
 
 interface AppProviderProps {
   children: ReactNode;
 }
 
-// Provider для глобального стану
+// Provider for global state
 export const AppProvider = ({ children }: AppProviderProps) => {
-  // Стан для todos
+  // State for todos
   const [todos, setTodos] = useState<Todo[]>(mockTodos);
   
-  // Стан для постів
+  // State for posts
   const [posts, setPosts] = useState<Post[]>(mockPosts);
   
-  // Поточний вигляд (для навігації)
+  // Current view (for navigation)
   const [currentView, setCurrentView] = useState<string>('home');
 
-  // Додати todo
+  // Add todo
   const addTodo = (todo: Todo) => {
-    console.log('📝 Додаємо todo в контекст:', todo);
+    console.log('📝 Adding todo to context:', todo);
     setTodos(prev => [...prev, todo]);
   };
 
-  // Видалити todo
+  // Remove todo
   const removeTodo = (id: number) => {
-    console.log(`🗑️ Видаляємо todo ${id} з контексту`);
+    console.log(`🗑️ Removing todo ${id} from context`);
     setTodos(prev => prev.filter(t => t.id !== id));
   };
 
-  // Оновити пост (наприклад, лайки)
+  // Update post (e.g., likes)
   const updatePost = (post: Post) => {
-    console.log('🔄 Оновлюємо пост в контексті:', post);
+    console.log('🔄 Updating post in context:', post);
     setPosts(prev => prev.map(p => p.id === post.id ? post : p));
   };
 
-  // Змінити поточний вигляд
+  // Change current view
   const handleViewChange = (view: string) => {
-    console.log(`🔀 Переключаємо на вигляд: ${view}`);
+    console.log(`🔀 Switching to view: ${view}`);
     setCurrentView(view);
   };
 
@@ -65,6 +65,9 @@ export const AppProvider = ({ children }: AppProviderProps) => {
     setCurrentView: handleViewChange,
   };
 
-  return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
+  return (
+    <AppContext.Provider value={value}>
+      {children}
+    </AppContext.Provider>
+  );
 };
-

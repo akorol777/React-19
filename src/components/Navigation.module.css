@@ -1,23 +1,32 @@
-/* Стилі для Navigation */
+/* Styles for Navigation */
 
 .nav {
   padding: 20px;
-  background-color: #f8f9fa;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   border-radius: 12px;
   margin-bottom: 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+  gap: 20px;
 }
 
 .title {
   margin: 0 0 8px 0;
   font-size: 28px;
-  color: #282c34;
+  color: #fff;
+  font-weight: 700;
 }
 
 .subtitle {
-  margin: 0 0 20px 0;
+  margin: 0;
   font-size: 14px;
-  color: #6c757d;
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .menu {

@@ -1,0 +1,49 @@
+.languageSwitcher {
+  display: flex;
+  align-items: center;
+}
+
+.toggleButton {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: rgba(255, 255, 255, 0.15);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 14px;
+  font-weight: 600;
+  backdrop-filter: blur(10px);
+}
+
+.toggleButton:hover {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-1px);
+}
+
+.toggleButton:active {
+  transform: translateY(0);
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: rgba(255, 255, 255, 0.6);
+  transition: all 0.2s ease;
+  font-size: 13px;
+}
+
+.option.active {
+  color: #fff;
+  transform: scale(1.1);
+}
+
+.separator {
+  color: rgba(255, 255, 255, 0.4);
+  font-weight: 300;
+  margin: 0 2px;
+}

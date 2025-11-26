@@ -1,4 +1,4 @@
-// Мокані дані для демонстрації React 19 фіч
+// Mock data for demonstrating React 19 features
 
 export interface User {
   id: number;
@@ -22,87 +22,96 @@ export interface Post {
   likes: number;
 }
 
-// Мокані користувачі
+// Mock users
 export const mockUsers: User[] = [
-  { id: 1, name: 'Олександр Петренко', email: 'alex@example.com', avatar: '👨‍💻' },
-  { id: 2, name: 'Марія Коваленко', email: 'maria@example.com', avatar: '👩‍💼' },
-  { id: 3, name: 'Іван Шевченко', email: 'ivan@example.com', avatar: '👨‍🎨' },
+  { id: 1, name: 'Andrii King', email: 'alex@example.com', avatar: '👨‍💻' },
+  { id: 2, name: 'Peter Paver', email: 'maria@example.com', avatar: '👩‍💼' },
+  { id: 3, name: 'Pavel Peter', email: 'ivan@example.com', avatar: '👨‍🎨' },
 ];
 
-// Мокані todo
+// Mock todos (will be translated dynamically)
+export const getMockTodos = (t: any): Todo[] => [
+  { id: 1, text: t.home.mockTodos.todo1, completed: true, userId: 1 },
+  { id: 2, text: t.home.mockTodos.todo2, completed: false, userId: 1 },
+  { id: 3, text: t.home.mockTodos.todo3, completed: false, userId: 1 },
+];
+
+// For backward compatibility (English version by default)
 export const mockTodos: Todo[] = [
-  { id: 1, text: 'Вивчити React 19', completed: true, userId: 1 },
-  { id: 2, text: 'Зробити презентацію', completed: false, userId: 1 },
-  { id: 3, text: 'Пояснити колегам нові фічі', completed: false, userId: 1 },
+  { id: 1, text: 'Learn React 19', completed: true, userId: 1 },
+  { id: 2, text: 'Create presentation', completed: false, userId: 1 },
+  { id: 3, text: 'Explain new features to colleagues', completed: false, userId: 1 },
 ];
 
-// Мокані пости
+// Mock posts
 export const mockPosts: Post[] = [
-  { id: 1, title: 'React 19 вийшов!', content: 'Нові можливості змінять ваш підхід до розробки...', author: 'React Team', likes: 150 },
-  { id: 2, title: 'Actions API', content: 'Більше не потрібно керувати loading станом вручну...', author: 'Dan Abramov', likes: 89 },
-  { id: 3, title: 'useOptimistic хук', content: 'Оптимістичні оновлення тепер вбудовані...', author: 'Sophie Alpert', likes: 67 },
+  { id: 1, title: 'React 19 Released!', content: 'New features will change your development approach...', author: 'React Team', likes: 150 },
+  { id: 2, title: 'Actions API', content: 'No more manual loading state management...', author: 'Dan Abramov', likes: 89 },
+  { id: 3, title: 'useOptimistic hook', content: 'Optimistic updates are now built-in...', author: 'Sophie Alpert', likes: 67 },
 ];
 
-// Імітація асинхронного запиту
+// Simulate async request
 export const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
-// Функція для імітації завантаження користувача
+// Function to simulate user loading
 export const fetchUser = async (id: number): Promise<User> => {
-  console.log(`🔄 Завантаження користувача ${id}...`);
+  console.log(`🔄 Loading user ${id}...`);
   await delay(1000);
   const user = mockUsers.find(u => u.id === id);
-  if (!user) throw new Error('Користувача не знайдено');
-  console.log(`✅ Користувач завантажений:`, user);
+  if (!user) throw new Error('User not found');
+  console.log(`✅ User loaded:`, user);
   return user;
 };
 
-// Функція для імітації завантаження постів
+// Function to simulate posts loading
 export const fetchPosts = async (): Promise<Post[]> => {
-  console.log('🔄 Завантаження постів...');
+  console.log('🔄 Loading posts...');
   await delay(1500);
-  console.log(`✅ Завантажено ${mockPosts.length} постів`);
+  console.log(`✅ Loaded ${mockPosts.length} posts`);
   return mockPosts;
 };
 
-// Функція для імітації збереження todo
+// Function to simulate todo saving
 export const saveTodo = async (todo: Omit<Todo, 'id'>): Promise<Todo> => {
-  console.log('💾 Збереження todo...', todo);
+  console.log('💾 Saving todo...', todo);
   await delay(1000);
   const newTodo = { ...todo, id: Date.now() };
-  console.log('✅ Todo збережено:', newTodo);
+  console.log('✅ Todo saved:', newTodo);
   return newTodo;
 };
 
-// Функція для імітації видалення todo
+// Function to simulate todo deletion
 export const deleteTodo = async (id: number): Promise<void> => {
-  console.log(`🗑️ Видалення todo ${id}...`);
+  console.log(`🗑️ Deleting todo ${id}...`);
   await delay(800);
-  console.log(`✅ Todo ${id} видалено`);
+  console.log(`✅ Todo ${id} deleted`);
 };
 
-// Функція для імітації збереження форми
+// Function to simulate form saving
 export const saveFormData = async (data: Record<string, any>): Promise<{ success: boolean; message: string }> => {
-  console.log('📤 Відправка форми...', data);
+  console.log('📤 Submitting form...', data);
   await delay(1500);
   
-  // Імітація помилки у 10% випадків
+  // Simulate error in 10% of cases
   if (Math.random() < 0.1) {
-    console.log('❌ Помилка відправки форми');
-    throw new Error('Помилка з\'єднання з сервером');
+    console.log('❌ Form submission error');
+    throw new Error('Server connection error');
   }
   
-  console.log('✅ Форма успішно відправлена');
-  return { success: true, message: 'Дані успішно збережені!' };
+  console.log('✅ Form successfully submitted');
+  return { success: true, message: 'Data successfully saved!' };
 };
 
-// Функція для імітації лайку поста
+// Function to simulate post like
 export const likePost = async (postId: number): Promise<Post> => {
-  console.log(`👍 Лайк поста ${postId}...`);
+  console.log(`👍 Liking post ${postId}...`);
   await delay(600);
   const post = mockPosts.find(p => p.id === postId);
-  if (!post) throw new Error('Пост не знайдено');
+  if (!post) throw new Error('Post not found');
   const updatedPost = { ...post, likes: post.likes + 1 };
-  console.log('✅ Лайк додано:', updatedPost);
+  console.log('✅ Like added:', updatedPost);
   return updatedPost;
 };
 
+// Backward compatibility exports
+export const fetchUserById = fetchUser;

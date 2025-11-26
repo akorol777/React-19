@@ -1,4 +1,4 @@
-/* Глобальні стилі для React 19 Demo */
+/* Global styles for React 19 Demo */
 
 * {
   box-sizing: border-box;
@@ -6,7 +6,7 @@
   padding: 0;
 }
 
-/* Прибираємо крапки зі списків (коли використовуємо емоджі як іконки) */
+/* Remove list markers (when using emoji as icons) */
 ul, ol {
   list-style: none;
   padding-left: 0;
@@ -32,7 +32,7 @@ code {
   font-size: 0.9em;
 }
 
-/* Анімація для спіннера */
+/* Spinner animation */
 @keyframes spin {
   from {
     transform: rotate(0deg);
@@ -42,15 +42,15 @@ code {
   }
 }
 
-/* Hover ефекти для карток */
-/* Закоментовано: картки тепер не інтерактивні
+/* Hover effects for cards */
+/* Commented out: cards are now non-interactive
 .feature-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
 }
 */
 
-/* Стилі для скролбару */
+/* Scrollbar styles */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;

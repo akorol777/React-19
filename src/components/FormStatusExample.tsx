@@ -1,15 +1,16 @@
 import { useFormStatus } from 'react-dom';
 import { saveFormData } from '../data/mockData';
-import { useState } from 'react';
+import { use, useState } from 'react';
+import { LanguageContext } from '../contexts/LanguageContext';
 import styles from './Examples.module.css';
 
-// React 19: useFormStatus - дізнатися статус форми з будь-якого дочірнього компонента!
-// Цей компонент НЕ знає про форму, але може отримати її статус
-const SubmitButton = () => {
-  // useFormStatus повертає статус БАТЬКІВСЬКОЇ форми
+// React 19: useFormStatus - get form status from any child component!
+// This component doesn't know about the form, but can get its status
+const SubmitButton = ({ t }: { t: any }) => {
+  // useFormStatus returns status of PARENT form
   const { pending, data, method } = useFormStatus();
 
-  console.log('🔍 Статус форми:', { pending, method, hasData: !!data });
+  console.log('🔍 Form status:', { pending, method, hasData: !!data });
 
   return (
     <button
@@ -17,19 +18,19 @@ const SubmitButton = () => {
       disabled={pending}
       className={`${styles.submitButton} ${pending ? styles.buttonDisabled : ''}`}
     >
-      {pending ? '⏳ Відправка...' : '📤 Відправити'}
+      {pending ? `⏳ ${t.form.submittingButton}` : `📤 ${t.form.submitButton}`}
     </button>
   );
 };
 
-// Компонент що показує статус форми в реальному часі
-const FormStatusIndicator = () => {
+// Component that shows form status in real-time
+const FormStatusIndicator = ({ t }: { t: any }) => {
   const { pending, data } = useFormStatus();
 
-  // Якщо форма не в процесі відправки, не показуємо індикатор
+  // If form is not being submitted, don't show indicator
   if (!pending) return null;
 
-  // Отримуємо дані з форми
+  // Get data from form
   const formValues = data ? {
     name: data.get('name'),
     email: data.get('email'),
@@ -40,44 +41,45 @@ const FormStatusIndicator = () => {
     <div className={styles.statusIndicator}>
       <div className={styles.statusHeader}>
         <span className={styles.statusIcon}>⏳</span>
-        <strong>Форма відправляється...</strong>
+        <strong>{t.statusIndicator.submitting}</strong>
       </div>
       <div className={styles.statusDetails}>
-        <small>Дані що відправляються:</small>
+        <small>{t.statusIndicator.dataSent}</small>
         <pre className={styles.statusData}>{JSON.stringify(formValues, null, 2)}</pre>
       </div>
     </div>
   );
 };
 
-// Кастомний input що показує чи можна його редагувати
-const SmartInput = ({ name, label, type = 'text', required = false }: {
+// Custom input that shows if it can be edited
+const SmartInput = ({ name, label, type = 'text', required = false, t }: {
   name: string;
   label: string;
   type?: string;
   required?: boolean;
+  t: any;
 }) => {
   const { pending } = useFormStatus();
 
   return (
     <div className={styles.formGroup}>
       <label className={styles.label}>
-        {label}:
-        {pending && <span className={styles.disabledBadge}>🔒 Заблоковано</span>}
+        {label}
+        {pending && <span className={styles.disabledBadge}>{t.smartInputs.locked}</span>}
       </label>
       <input
         name={name}
         type={type}
         required={required}
-        disabled={pending} // Автоматично блокуємо під час відправки
+        disabled={pending} // Automatically lock during submission
         className={`${styles.input} ${pending ? styles.inputDisabled : ''}`}
-        placeholder={pending ? 'Відправка...' : `Введіть ${label.toLowerCase()}`}
+        placeholder={pending ? t.smartInputs.submitting : `${t.smartInputs.enterPrefix} ${label.toLowerCase()}`}
       />
     </div>
   );
 };
 
-// Кастомний select
+// Custom select
 const SmartSelect = ({ name, label, options }: {
   name: string;
   label: string;
@@ -87,7 +89,7 @@ const SmartSelect = ({ name, label, options }: {
 
   return (
     <div className={styles.formGroup}>
-      <label className={styles.label}>{label}:</label>
+      <label className={styles.label}>{label}</label>
       <select
         name={name}
         disabled={pending}
@@ -103,13 +105,17 @@ const SmartSelect = ({ name, label, options }: {
   );
 };
 
-// Головний компонент
+// Main component
 export const FormStatusExample = () => {
+  const langContext = use(LanguageContext);
+  if (!langContext) throw new Error('LanguageContext not found');
+  const { t } = langContext;
+
   const [result, setResult] = useState<{ success: boolean; message: string } | null>(null);
 
-  // Action для форми
+  // Action for form
   const handleSubmit = async (formData: FormData) => {
-    console.log('📤 Відправка форми...');
+    console.log('📤 Submitting form...');
     
     try {
       const response = await saveFormData({
@@ -119,33 +125,31 @@ export const FormStatusExample = () => {
         subscribe: formData.get('subscribe'),
       });
       
-      console.log('✅ Успіх:', response);
+      console.log('✅ Success:', response);
       setResult(response);
     } catch (error) {
-      console.error('❌ Помилка:', error);
+      console.error('❌ Error:', error);
       setResult({
         success: false,
-        message: error instanceof Error ? error.message : 'Помилка відправки',
+        message: error instanceof Error ? error.message : 'Submission error',
       });
     }
   };
 
   return (
     <div className={styles.container}>
-      <h2 className={styles.title}>📊 useFormStatus</h2>
+      <h2 className={styles.title}>📊 {t.formStatus.title}</h2>
       
       <p className={styles.description}>
-        <strong>Що нового?</strong> Будь-який дочірній компонент може дізнатися статус форми, 
-        не передаючи пропси! Це особливо корисно для переісвикористовуваних UI компонентів.
+        <strong>{t.formStatus.whatsNew}</strong> {t.formStatus.description}
       </p>
 
-      {/* Пояснення проблеми в React 18 */}
+      {/* Problem explanation in React 18 */}
       <div className={styles.problemSection}>
-        <h3 className={styles.sectionTitle}>😰 Проблема в React 18:</h3>
-        <p className={styles.problemText}>
-          Щоб кнопка знала про статус форми, потрібно було передавати <code>isLoading</code> через пропси:
+        <h3 className={styles.sectionTitle}>{t.formStatus.problemSection.title}</h3>
+        <p className={styles.problemText} dangerouslySetInnerHTML={{ __html: t.formStatus.problemSection.text }}>
         </p>
-        <pre className={styles.code}>{`// React 18: передача через пропси
+        <pre className={styles.code}>{`// React 18: passing through props
 const [loading, setLoading] = useState(false);
 
 <form onSubmit={handleSubmit}>
@@ -154,63 +158,64 @@ const [loading, setLoading] = useState(false);
 </form>`}</pre>
       </div>
 
-      {/* Рішення в React 19 */}
+      {/* Solution in React 19 */}
       <div className={styles.solutionSection}>
-        <h3 className={styles.sectionTitle}>🎉 Рішення в React 19:</h3>
-        <p className={styles.solutionText}>
-          Компонент <strong>автоматично</strong> знає про статус батьківської форми:
+        <h3 className={styles.sectionTitle}>{t.formStatus.solutionSection.title}</h3>
+        <p className={styles.solutionText} dangerouslySetInnerHTML={{ __html: t.formStatus.solutionSection.text }}>
         </p>
-        <pre className={styles.code}>{`// React 19: useFormStatus знає все!
+        <pre className={styles.code}>{`// React 19: useFormStatus knows everything!
 function SubmitButton() {
   const { pending } = useFormStatus();
   return (
     <button disabled={pending}>
-      {pending ? 'Відправка...' : 'Відправити'}
+      {pending ? 'Submitting...' : 'Submit'}
     </button>
   );
 }`}</pre>
       </div>
 
-      {/* Демо форма */}
+      {/* Demo form */}
       <div className={styles.demoSection}>
-        <h3 className={styles.sectionTitle}>🧪 Спробуйте самі:</h3>
+        <h3 className={styles.sectionTitle}>{t.formStatus.demoTitle}</h3>
         
         <form action={handleSubmit} className={styles.form}>
-          {/* Індикатор статусу - він сам знає про стан форми! */}
-          <FormStatusIndicator />
+          {/* Status indicator - it knows form state itself! */}
+          <FormStatusIndicator t={t.formStatus} />
 
-          {/* Кастомні інпути що самі блокуються */}
+          {/* Custom inputs that block themselves */}
           <SmartInput
             name="name"
-            label="Ім'я"
+            label={t.formStatus.form.nameLabel.replace(':', '')}
             required
+            t={t.formStatus}
           />
 
           <SmartInput
             name="email"
-            label="Email"
+            label={t.formStatus.form.emailLabel.replace(':', '')}
             type="email"
             required
+            t={t.formStatus}
           />
 
           <SmartSelect
             name="priority"
-            label="Пріоритет"
+            label={t.formStatus.form.priorityLabel.replace(':', '')}
             options={[
-              { value: 'low', label: '🟢 Низький' },
-              { value: 'medium', label: '🟡 Середній' },
-              { value: 'high', label: '🔴 Високий' },
+              { value: 'low', label: t.formStatus.form.priorityOptions.low },
+              { value: 'medium', label: t.formStatus.form.priorityOptions.medium },
+              { value: 'high', label: t.formStatus.form.priorityOptions.high },
             ]}
           />
 
           <div className={styles.checkboxGroup}>
-            <CheckboxWithStatus name="subscribe" label="Підписатись на розсилку" />
+            <CheckboxWithStatus name="subscribe" label={t.formStatus.form.subscribeLabel} t={t.formStatus} />
           </div>
 
-          {/* Кнопка що сама знає про стан */}
-          <SubmitButton />
+          {/* Button that knows state itself */}
+          <SubmitButton t={t.formStatus} />
 
-          {/* Результат */}
+          {/* Result */}
           {result && (
             <div
               className={`${styles.result} ${result.success ? styles.resultSuccess : styles.resultError}`}
@@ -221,49 +226,47 @@ function SubmitButton() {
         </form>
       </div>
 
-      {/* Переваги */}
+      {/* Benefits */}
       <div className={styles.benefits}>
-        <h3 className={styles.sectionTitle}>💡 Переваги useFormStatus:</h3>
+        <h3 className={styles.sectionTitle}>{t.formStatus.benefitsTitle}</h3>
         <ul className={styles.list}>
-          <li>✅ <strong>Немає prop drilling:</strong> не потрібно передавати стан через пропси</li>
-          <li>✅ <strong>Переісвикористовувані компоненти:</strong> кнопки, інпути знають все самі</li>
-          <li>✅ <strong>Менше коду:</strong> не потрібні додаткові useState для loading</li>
-          <li>✅ <strong>Автоматична синхронізація:</strong> всі компоненти бачать актуальний стан</li>
-          <li>✅ <strong>Доступ до даних форми:</strong> можна побачити що саме відправляється</li>
+          {t.formStatus.benefitsList.map((benefit: string, index: number) => (
+            <li key={index} dangerouslySetInnerHTML={{ __html: benefit }} />
+          ))}
         </ul>
       </div>
 
-      {/* Що повертає useFormStatus */}
+      {/* What useFormStatus returns */}
       <div className={styles.apiSection}>
-        <h3 className={styles.sectionTitle}>📖 API useFormStatus:</h3>
+        <h3 className={styles.sectionTitle}>{t.formStatus.apiSection.title}</h3>
         <table className={styles.table}>
           <thead>
             <tr>
-              <th className={styles.th}>Властивість</th>
-              <th className={styles.th}>Тип</th>
-              <th className={styles.th}>Опис</th>
+              <th className={styles.th}>{t.formStatus.apiSection.table.property}</th>
+              <th className={styles.th}>{t.formStatus.apiSection.table.type}</th>
+              <th className={styles.th}>{t.formStatus.apiSection.table.description}</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td className={styles.td}><code>pending</code></td>
               <td className={styles.td}>boolean</td>
-              <td className={styles.td}>Чи відправляється форма зараз</td>
+              <td className={styles.td}>{t.formStatus.apiSection.table.pending}</td>
             </tr>
             <tr>
               <td className={styles.td}><code>data</code></td>
               <td className={styles.td}>FormData | null</td>
-              <td className={styles.td}>Дані що відправляються</td>
+              <td className={styles.td}>{t.formStatus.apiSection.table.data}</td>
             </tr>
             <tr>
               <td className={styles.td}><code>method</code></td>
               <td className={styles.td}>string | null</td>
-              <td className={styles.td}>HTTP метод (GET/POST)</td>
+              <td className={styles.td}>{t.formStatus.apiSection.table.method}</td>
             </tr>
             <tr>
               <td className={styles.td}><code>action</code></td>
               <td className={styles.td}>string | function | null</td>
-              <td className={styles.td}>Action URL або функція</td>
+              <td className={styles.td}>{t.formStatus.apiSection.table.action}</td>
             </tr>
           </tbody>
         </table>
@@ -272,8 +275,8 @@ function SubmitButton() {
   );
 };
 
-// Чекбокс що знає про статус форми
-const CheckboxWithStatus = ({ name, label }: { name: string; label: string }) => {
+// Checkbox that knows about form status
+const CheckboxWithStatus = ({ name, label, t }: { name: string; label: string; t: any }) => {
   const { pending } = useFormStatus();
   
   return (
@@ -285,6 +288,7 @@ const CheckboxWithStatus = ({ name, label }: { name: string; label: string }) =>
         className={styles.checkbox}
       />
       <span className={pending ? styles.textDisabled : ''}>{label}</span>
+      {pending && <span className={styles.disabledBadge}>{t.smartInputs.locked}</span>}
     </label>
   );
 };

@@ -1,47 +1,52 @@
-import { useState } from 'react';
+import { use, useState, useActionState } from 'react';
 import { Form, Field } from 'react-final-form';
-import { useActionState } from 'react';
 import { saveFormData } from '../data/mockData';
+import { LanguageContext } from '../contexts/LanguageContext';
 import styles from './Examples.module.css';
 
-// React 18 підхід: Final Form
+// React 18 approach: Final Form
 const FinalFormExample = () => {
   const [result, setResult] = useState<string>('');
 
-  // Валідація для Final Form
+  const langContext = use(LanguageContext);
+  if (!langContext) throw new Error('LanguageContext not found');
+  const { t } = langContext;
+  const tf = t.finalForm;
+
+  // Validation for Final Form
   const validate = (values: any) => {
     const errors: any = {};
     if (!values.name) {
-      errors.name = 'Обов\'язкове поле';
+      errors.name = tf.validation.required;
     }
     if (!values.email) {
-      errors.email = 'Обов\'язкове поле';
+      errors.email = tf.validation.required;
     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
-      errors.email = 'Невалідний email';
+      errors.email = tf.validation.emailInvalid;
     }
     return errors;
   };
 
   // Submit handler
   const onSubmit = async (values: any) => {
-    console.log('📤 Final Form відправка:', values);
+    console.log('📤 Final Form submission:', values);
     setResult('');
     
     try {
       const response = await saveFormData(values);
-      console.log('✅ Final Form успіх:', response);
+      console.log('✅ Final Form success:', response);
       setResult(`✅ ${response.message}`);
-      return undefined; // Повертаємо undefined при успіху
+      return undefined; // Return undefined on success
     } catch (error) {
-      console.error('❌ Final Form помилка:', error);
-      setResult(`❌ ${error instanceof Error ? error.message : 'Помилка'}`);
-      return { _error: 'Помилка відправки' };
+      console.error('❌ Final Form error:', error);
+      setResult(`❌ ${error instanceof Error ? error.message : tf.validation.error}`);
+      return { _error: tf.validation.error };
     }
   };
 
   return (
     <div className={styles.formExample}>
-      <h4 className={styles.formTitle}>📋 Final Form (React 18 підхід)</h4>
+      <h4 className={styles.formTitle}>{tf.formTitles.finalForm}</h4>
       
       <Form
         onSubmit={onSubmit}
@@ -51,11 +56,11 @@ const FinalFormExample = () => {
             <Field name="name">
               {({ input, meta }) => (
                 <div className={styles.fieldGroup}>
-                  <label className={styles.label}>Ім'я:</label>
+                  <label className={styles.label}>{tf.form.nameLabel}</label>
                   <input
                     {...input}
                     type="text"
-                    placeholder="Ваше ім'я"
+                    placeholder={tf.form.namePlaceholder}
                     className={`${styles.input} ${meta.error && meta.touched ? styles.inputError : ''}`}
                   />
                   {meta.error && meta.touched && (
@@ -85,10 +90,10 @@ const FinalFormExample = () => {
             <Field name="message" component="textarea">
               {({ input, meta }) => (
                 <div className={styles.fieldGroup}>
-                  <label className={styles.label}>Повідомлення:</label>
+                  <label className={styles.label}>{tf.form.messageLabel}</label>
                   <textarea
                     {...input}
-                    placeholder="Ваше повідомлення..."
+                    placeholder={tf.form.messagePlaceholder}
                     className={`${styles.textarea} ${meta.error && meta.touched ? styles.inputError : ''}`}
                   />
                 </div>
@@ -100,19 +105,19 @@ const FinalFormExample = () => {
               disabled={submitting || pristine}
               className={`${styles.submitButton} ${submitting || pristine ? styles.buttonDisabled : ''}`}
             >
-              {submitting ? '⏳ Відправка...' : '📤 Відправити'}
+              {submitting ? `⏳ ${tf.form.submittingButton}` : `📤 ${tf.form.submitButton}`}
             </button>
 
             {/* Debug info */}
             <div className={styles.debugInfo}>
               <small>
-                <strong>Стан форми:</strong>
+                <strong>{tf.form.formState}</strong>
                 <br />
-                Submitting: {submitting ? 'Так' : 'Ні'}
+                {tf.form.submitting} {submitting ? tf.form.yes : tf.form.no}
                 <br />
-                Pristine: {pristine ? 'Так' : 'Ні'}
+                {tf.form.pristine} {pristine ? tf.form.yes : tf.form.no}
                 <br />
-                Values: {JSON.stringify(values, null, 2)}
+                {tf.form.values} {JSON.stringify(values, null, 2)}
               </small>
             </div>
 
@@ -126,42 +131,47 @@ const FinalFormExample = () => {
       />
 
       <div className={styles.codeBlock}>
-        <strong>📝 Кількість коду:</strong> ~80 рядків
+        <strong>📝 {tf.form.linesOfCode}</strong> ~80 lines
         <br />
-        <strong>📦 Розмір бандла:</strong> +25kb (Final Form)
+        <strong>📦 {tf.form.bundleSize}</strong> +25kb (Final Form)
       </div>
     </div>
   );
 };
 
-// React 19 підхід: useActionState
+// React 19 approach: useActionState
 const React19FormExample = () => {
+  const langContext = use(LanguageContext);
+  if (!langContext) throw new Error('LanguageContext not found');
+  const { t } = langContext;
+  const tf = t.finalForm;
+
   // React 19: useActionState
   const [state, submitAction, isPending] = useActionState(
     async (_prevState: any, formData: FormData) => {
-      console.log('📤 React 19 відправка');
+      console.log('📤 React 19 submission');
       
       const name = formData.get('name') as string;
       const email = formData.get('email') as string;
       const message = formData.get('message') as string;
 
-      // Проста валідація
+      // Simple validation
       if (!name) {
-        return { success: false, message: 'Ім\'я обов\'язкове', errors: { name: true } };
+        return { success: false, message: tf.validation.nameRequired, errors: { name: true } };
       }
       if (!email || !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)) {
-        return { success: false, message: 'Невалідний email', errors: { email: true } };
+        return { success: false, message: tf.validation.emailInvalid, errors: { email: true } };
       }
 
       try {
         const response = await saveFormData({ name, email, message });
-        console.log('✅ React 19 успіх:', response);
+        console.log('✅ React 19 success:', response);
         return { success: true, message: response.message, errors: {} };
       } catch (error) {
-        console.error('❌ React 19 помилка:', error);
+        console.error('❌ React 19 error:', error);
         return { 
           success: false, 
-          message: error instanceof Error ? error.message : 'Помилка',
+          message: error instanceof Error ? error.message : tf.validation.error,
           errors: {}
         };
       }
@@ -171,15 +181,15 @@ const React19FormExample = () => {
 
   return (
     <div className={styles.formExample}>
-      <h4 className={styles.formTitle}>⚡ React 19 Actions (новий підхід)</h4>
+      <h4 className={styles.formTitle}>{tf.formTitles.react19}</h4>
       
       <form action={submitAction} className={styles.form}>
         <div className={styles.fieldGroup}>
-          <label className={styles.label}>Ім'я:</label>
+          <label className={styles.label}>{tf.form.nameLabel}</label>
           <input
             name="name"
             type="text"
-            placeholder="Ваше ім'я"
+            placeholder={tf.form.namePlaceholder}
             required
             disabled={isPending}
             className={`${styles.input} ${state.errors?.name ? styles.inputError : ''}`}
@@ -199,10 +209,10 @@ const React19FormExample = () => {
         </div>
 
         <div className={styles.fieldGroup}>
-          <label className={styles.label}>Повідомлення:</label>
+          <label className={styles.label}>{tf.form.messageLabel}</label>
           <textarea
             name="message"
-            placeholder="Ваше повідомлення..."
+            placeholder={tf.form.messagePlaceholder}
             disabled={isPending}
             className={styles.textarea}
           />
@@ -213,17 +223,17 @@ const React19FormExample = () => {
           disabled={isPending}
           className={`${styles.submitButton} ${isPending ? styles.buttonDisabled : ''}`}
         >
-          {isPending ? '⏳ Відправка...' : '📤 Відправити'}
+          {isPending ? `⏳ ${tf.form.submittingButton}` : `📤 ${tf.form.submitButton}`}
         </button>
 
         {/* Debug info */}
         <div className={styles.debugInfo}>
           <small>
-            <strong>Стан форми:</strong>
+            <strong>{tf.form.formState}</strong>
             <br />
-            Pending: {isPending ? 'Так' : 'Ні'}
+            {tf.form.pending} {isPending ? tf.form.yes : tf.form.no}
             <br />
-            Success: {state.success ? 'Так' : 'Ні'}
+            {tf.form.success} {state.success ? tf.form.yes : tf.form.no}
           </small>
         </div>
 
@@ -241,9 +251,9 @@ const React19FormExample = () => {
       </form>
 
       <div className={styles.codeBlock}>
-        <strong>📝 Кількість коду:</strong> ~40 рядків
+        <strong>📝 {tf.form.linesOfCode}</strong> ~40 lines
         <br />
-        <strong>📦 Розмір бандла:</strong> 0kb (вбудовано в React)
+        <strong>📦 {tf.form.bundleSize}</strong> 0kb ({tf.form.builtIntoReact})
       </div>
     </div>
   );
@@ -251,74 +261,78 @@ const React19FormExample = () => {
 
 // Головний компонент
 export const FinalFormComparison = () => {
+  const langContext = use(LanguageContext);
+  if (!langContext) throw new Error('LanguageContext not found');
+  const { t } = langContext;
+  const tf = t.finalForm;
+
   return (
     <div className={styles.container}>
-      <h2 className={styles.title}>📋 Final Form vs React 19</h2>
+      <h2 className={styles.title}>📋 {tf.title}</h2>
       
       <p className={styles.description}>
-        <strong>Порівняння підходів:</strong> Final Form був стандартом для складних форм у React 18. 
-        В React 19 багато його можливостей тепер вбудовані нативно!
+        {tf.description}
       </p>
 
-      {/* Порівняльна таблиця */}
+      {/* Comparison table */}
       <div className={styles.comparisonTable}>
-        <h3 className={styles.sectionTitle}>⚖️ Порівняння функціональності:</h3>
+        <h3 className={styles.sectionTitle}>⚖️ {tf.comparisonTableTitle}</h3>
         <table className={styles.table}>
           <thead>
             <tr>
-              <th className={styles.th}>Функція</th>
-              <th className={styles.th}>Final Form</th>
-              <th className={styles.th}>React 19</th>
+              <th className={styles.th}>{tf.table.feature}</th>
+              <th className={styles.th}>{tf.table.finalForm}</th>
+              <th className={styles.th}>{tf.table.react19}</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td className={styles.td}>Керування станом</td>
-              <td className={styles.td}>✅ Автоматичне</td>
-              <td className={styles.td}>✅ Автоматичне</td>
+              <td className={styles.td}>{tf.table.stateManagement}</td>
+              <td className={styles.td}>✅ {tf.table.automatic}</td>
+              <td className={styles.td}>✅ {tf.table.automatic}</td>
             </tr>
             <tr>
-              <td className={styles.td}>Loading стан</td>
+              <td className={styles.td}>{tf.table.loadingState}</td>
               <td className={styles.td}>✅ submitting</td>
               <td className={styles.td}>✅ isPending</td>
             </tr>
             <tr>
-              <td className={styles.td}>Валідація</td>
-              <td className={styles.td}>✅ Вбудована</td>
-              <td className={styles.td}>⚠️ Треба писати вручну</td>
+              <td className={styles.td}>{tf.table.validation}</td>
+              <td className={styles.td}>✅ {tf.table.builtIn}</td>
+              <td className={styles.td}>⚠️ {tf.table.manual}</td>
             </tr>
             <tr>
-              <td className={styles.td}>Field-level validation</td>
-              <td className={styles.td}>✅ Так</td>
-              <td className={styles.td}>❌ Ні (тільки форма)</td>
+              <td className={styles.td}>{tf.table.fieldValidation}</td>
+              <td className={styles.td}>✅ {tf.table.yes}</td>
+              <td className={styles.td}>❌ {tf.table.formOnly}</td>
             </tr>
             <tr>
-              <td className={styles.td}>Dirty/Pristine</td>
-              <td className={styles.td}>✅ Автоматично</td>
-              <td className={styles.td}>❌ Треба самому</td>
+              <td className={styles.td}>{tf.table.dirtyPristine}</td>
+              <td className={styles.td}>✅ {tf.table.automatic}</td>
+              <td className={styles.td}>❌ {tf.table.manualImplementation}</td>
             </tr>
             <tr>
-              <td className={styles.td}>Розмір бандлу</td>
+              <td className={styles.td}>{tf.table.bundleSize}</td>
               <td className={styles.td}>❌ +25kb</td>
-              <td className={styles.td}>✅ 0kb (вбудовано)</td>
+              <td className={styles.td}>✅ 0kb ({tf.form.builtIntoReact})</td>
             </tr>
             <tr>
-              <td className={styles.td}>Складність API</td>
-              <td className={styles.td}>⚠️ Середня</td>
-              <td className={styles.td}>✅ Проста</td>
+              <td className={styles.td}>{tf.table.apiComplexity}</td>
+              <td className={styles.td}>⚠️ {tf.table.medium}</td>
+              <td className={styles.td}>✅ {tf.table.simple}</td>
             </tr>
             <tr>
-              <td className={styles.td}>SSR підтримка</td>
-              <td className={styles.td}>⚠️ Потребує налаштування</td>
-              <td className={styles.td}>✅ Out of the box</td>
+              <td className={styles.td}>{tf.table.ssrSupport}</td>
+              <td className={styles.td}>⚠️ {tf.table.requiresConfig}</td>
+              <td className={styles.td}>✅ {tf.table.outOfBox}</td>
             </tr>
           </tbody>
         </table>
       </div>
 
-      {/* Інтерактивне порівняння */}
+      {/* Interactive comparison */}
       <div className={styles.interactiveComparison}>
-        <h3 className={styles.sectionTitle}>🧪 Спробуйте обидва підходи:</h3>
+        <h3 className={styles.sectionTitle}>🧪 {tf.interactiveTitle}</h3>
         
         <div className={styles.formsGrid}>
           <FinalFormExample />
@@ -326,95 +340,59 @@ export const FinalFormComparison = () => {
         </div>
       </div>
 
-      {/* Коли що використовувати */}
+      {/* When to use what */}
       <div className={styles.whenToUse}>
-        <h3 className={styles.sectionTitle}>🤔 Коли що використовувати?</h3>
+        <h3 className={styles.sectionTitle}>🤔 {tf.whenToUse.title}</h3>
         
         <div className={styles.whenToUseGrid}>
           <div className={styles.whenCard}>
-            <h4 className={styles.whenTitle}>📋 Final Form</h4>
-            <p className={styles.whenSubtitle}>Використовуйте коли:</p>
+            <h4 className={styles.whenTitle}>{tf.whenToUse.finalForm.title}</h4>
+            <p className={styles.whenSubtitle}>{tf.whenToUse.finalForm.subtitle}</p>
             <ul className={styles.whenList}>
-              <li>✅ Потрібна складна валідація на рівні полів</li>
-              <li>✅ Багато динамічних полів</li>
-              <li>✅ Складні форми з wizard/steps</li>
-              <li>✅ Потрібні field arrays</li>
-              <li>✅ Вже є в проекті і працює</li>
+              {tf.whenToUse.finalForm.items.map((item: string, index: number) => (
+                <li key={index}>✅ {item}</li>
+              ))}
             </ul>
           </div>
 
           <div className={styles.whenCard}>
-            <h4 className={styles.whenTitle}>⚡ React 19 Actions</h4>
-            <p className={styles.whenSubtitle}>Використовуйте коли:</p>
+            <h4 className={styles.whenTitle}>{tf.whenToUse.react19.title}</h4>
+            <p className={styles.whenSubtitle}>{tf.whenToUse.react19.subtitle}</p>
             <ul className={styles.whenList}>
-              <li>✅ Прості/середні форми</li>
-              <li>✅ Новий проект на React 19</li>
-              <li>✅ Важливий розмір бандлу</li>
-              <li>✅ Потрібен SSR/RSC</li>
-              <li>✅ Хочете простіший код</li>
+              {tf.whenToUse.react19.items.map((item: string, index: number) => (
+                <li key={index}>✅ {item}</li>
+              ))}
             </ul>
           </div>
         </div>
       </div>
 
-      {/* Міграційна стратегія */}
+      {/* Migration strategy */}
       <div className={styles.migration}>
-        <h3 className={styles.sectionTitle}>🔄 Стратегія міграції:</h3>
+        <h3 className={styles.sectionTitle}>🔄 {tf.migration.title}</h3>
         <div className={styles.migrationSteps}>
-          <div className={styles.step}>
-            <div className={styles.stepNumber}>1</div>
-            <div>
-              <strong>Оцініть складність форм</strong>
-              <p className={styles.stepDesc}>
-                Прості форми можна переписати на React 19, складні - залишити на Final Form
-              </p>
+          {tf.migration.steps.map((step: any, index: number) => (
+            <div key={index} className={styles.step}>
+              <div className={styles.stepNumber}>{index + 1}</div>
+              <div>
+                <strong>{step.title}</strong>
+                <p className={styles.stepDesc}>
+                  {step.description}
+                </p>
+              </div>
             </div>
-          </div>
-          <div className={styles.step}>
-            <div className={styles.stepNumber}>2</div>
-            <div>
-              <strong>Поступова міграція</strong>
-              <p className={styles.stepDesc}>
-                Нові форми пишіть на React 19, старі переписуйте по потребі
-              </p>
-            </div>
-          </div>
-          <div className={styles.step}>
-            <div className={styles.stepNumber}>3</div>
-            <div>
-              <strong>Створіть обгортки</strong>
-              <p className={styles.stepDesc}>
-                Напишіть переісвикористовувані компоненти для валідації та обробки помилок
-              </p>
-            </div>
-          </div>
-          <div className={styles.step}>
-            <div className={styles.stepNumber}>4</div>
-            <div>
-              <strong>Не поспішайте</strong>
-              <p className={styles.stepDesc}>
-                Final Form все ще чудово працює. Міграція - це не обов'язково
-              </p>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
 
-      {/* Висновок */}
+      {/* Conclusion */}
       <div className={styles.conclusion}>
-        <h3 className={styles.sectionTitle}>📌 Висновок:</h3>
-        <p className={styles.conclusionText}>
-          <strong>React 19 Actions</strong> - це чудовий вибір для більшості форм. 
-          Але <strong>Final Form</strong> все ще актуальний для дуже складних випадків. 
-        </p>
-        <p className={styles.conclusionText}>
-          На вашому проекті можна <strong>використовувати обидва підходи</strong> одночасно: 
-          нові прості форми на React 19, а складні залишити на Final Form.
-        </p>
-        <p className={styles.conclusionText}>
-          <strong>Головне:</strong> React 19 робить велике крок у напрямку спрощення роботи з формами 
-          та зменшення залежності від сторонніх бібліотек! 🚀
-        </p>
+        <h3 className={styles.sectionTitle}>📌 {tf.conclusionSection.title}</h3>
+        {tf.conclusionSection.paragraphs.map((paragraph: string, index: number) => (
+          <p key={index} className={styles.conclusionText}>
+            {paragraph}
+          </p>
+        ))}
       </div>
     </div>
   );

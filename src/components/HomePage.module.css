@@ -1,6 +1,6 @@
-/* Стилі для HomePage */
+/* Styles for HomePage */
 
-/* Прибираємо крапки зі списків */
+/* Remove list markers */
 ul, ol {
   list-style: none;
   padding-left: 0;
