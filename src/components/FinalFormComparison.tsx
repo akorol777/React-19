@@ -138,7 +138,7 @@ const FinalFormExample = () => {
 const React19FormExample = () => {
   // React 19: useActionState
   const [state, submitAction, isPending] = useActionState(
-    async (prevState: any, formData: FormData) => {
+    async (_prevState: any, formData: FormData) => {
       console.log('📤 React 19 відправка');
       
       const name = formData.get('name') as string;

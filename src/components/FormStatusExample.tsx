@@ -7,7 +7,7 @@ import styles from './Examples.module.css';
 // Цей компонент НЕ знає про форму, але може отримати її статус
 const SubmitButton = () => {
   // useFormStatus повертає статус БАТЬКІВСЬКОЇ форми
-  const { pending, data, method, action } = useFormStatus();
+  const { pending, data, method } = useFormStatus();
 
   console.log('🔍 Статус форми:', { pending, method, hasData: !!data });
 

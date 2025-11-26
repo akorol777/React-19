@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useState } from 'react';
+import { createContext, useState, type ReactNode } from 'react';
 import type { Todo, Post } from '../data/mockData';
 import { mockTodos, mockPosts } from '../data/mockData';
 

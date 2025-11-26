@@ -27,8 +27,8 @@ export const OptimisticExample = () => {
   );
 
   // Action для додавання todo
-  const [addState, addAction, isAdding] = useActionState(
-    async (prevState: any, formData: FormData) => {
+  const [, addAction, isAdding] = useActionState(
+    async (_prevState: any, formData: FormData) => {
       const text = formData.get('todo') as string;
       
       // Створюємо новий todo з тимчасовим ID
