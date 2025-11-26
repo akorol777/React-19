@@ -3,7 +3,7 @@ import type { User, Post } from '../data/mockData';
 import { fetchUser, fetchPosts } from '../data/mockData';
 import { AppContext } from '../contexts/AppContext';
 import { LanguageContext } from '../contexts/LanguageContext';
-import styles from './Examples.module.css';
+import styles from './Examples.module.scss';
 
 // Component that uses use() to unwrap promise
 const UserProfile = ({ userPromise }: { userPromise: Promise<User> }) => {
@@ -147,10 +147,7 @@ export const UseHookExample = () => {
 
           <button
             onClick={() => setLoadData(!loadData)}
-            className={styles.button}
-            style={{
-              backgroundColor: loadData ? '#dc3545' : '#61dafb',
-            }}
+            className={`${styles.button} ${loadData ? styles.buttonDanger : ''}`}
           >
             {loadData
               ? `🛑 ${t.useHook.loadingButton}`

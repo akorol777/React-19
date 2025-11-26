@@ -2,7 +2,7 @@ import { useFormStatus } from 'react-dom';
 import { saveFormData } from '../data/mockData';
 import { use, useState } from 'react';
 import { LanguageContext } from '../contexts/LanguageContext';
-import styles from './Examples.module.css';
+import styles from './Examples.module.scss';
 
 // React 19: useFormStatus - get form status from any child component!
 // This component doesn't know about the form, but can get its status

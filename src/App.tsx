@@ -9,6 +9,7 @@ import { FormStatusExample } from './components/FormStatusExample';
 import { RefExample } from './components/RefExample';
 import { MetadataExample } from './components/MetadataExample';
 import { FinalFormComparison } from './components/FinalFormComparison';
+import styles from './App.module.scss';
 
 // Component that renders the appropriate example based on current view
 const MainContent = () => {
@@ -43,7 +44,7 @@ const MainContent = () => {
   };
 
   return (
-    <div style={styles.content}>
+    <div className={styles.content}>
       {renderView()}
     </div>
   );
@@ -61,7 +62,7 @@ const App = () => {
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       
       <AppProvider>
-        <div style={styles.app}>
+        <div className={styles.app}>
           {/* Navigation */}
           <Navigation />
           
@@ -72,17 +73,5 @@ const App = () => {
     </>
   );
 };
-
-// Styles
-const styles = {
-  app: {
-    minHeight: '100vh',
-    backgroundColor: '#f0f2f5',
-    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
-  },
-  content: {
-    paddingBottom: '40px',
-  },
-} as const;
 
 export default App;

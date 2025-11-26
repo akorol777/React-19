@@ -3,7 +3,7 @@ import { AppContext } from '../contexts/AppContext';
 import { LanguageContext } from '../contexts/LanguageContext';
 import type { Todo } from '../data/mockData';
 import { saveTodo, deleteTodo } from '../data/mockData';
-import styles from './Examples.module.css';
+import styles from './Examples.module.scss';
 
 // React 19: useOptimistic - for optimistic UI updates
 export const OptimisticExample = () => {
@@ -148,15 +148,15 @@ export const OptimisticExample = () => {
         {optimisticTodos.length === 0 ? (
           <p className={styles.emptyState}>{t.optimistic.emptyState}</p>
         ) : (
-          optimisticTodos.map(todo => (
-            <div
-              key={todo.id}
-              className={styles.todoItem}
-              style={{
-                // If todo not yet saved (optimistic), make it transparent
-                opacity: todo.id > Date.now() - 2000 ? 0.6 : 1,
-              }}
-            >
+          optimisticTodos.map(todo => {
+            // Check if todo is optimistic (recently created)
+            const isOptimistic = todo.id > Date.now() - 2000;
+            
+            return (
+              <div
+                key={todo.id}
+                className={`${styles.todoItem} ${isOptimistic ? styles.todoItemOptimistic : ''}`}
+              >
               <div className={styles.todoContent}>
                 <span className={styles.todoText}>{todo.text}</span>
                 {todo.id > Date.now() - 2000 && (
@@ -171,7 +171,8 @@ export const OptimisticExample = () => {
                 {t.optimistic.removeButton}
               </button>
             </div>
-          ))
+          );
+          })
         )}
       </div>
 

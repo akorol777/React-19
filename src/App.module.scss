@@ -1,0 +1,13 @@
+// Styles for main App component
+@use './styles/variables' as *;
+
+.app {
+  min-height: 100vh;
+  background-color: $background-light;
+  font-family: $font-family;
+}
+
+.content {
+  padding-bottom: 40px;
+}
+

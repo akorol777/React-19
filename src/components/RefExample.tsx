@@ -1,6 +1,6 @@
 import { use, useRef, type Ref } from 'react';
 import { LanguageContext } from '../contexts/LanguageContext';
-import styles from './Examples.module.css';
+import styles from './Examples.module.scss';
 
 // React 19: ref as regular prop! No more forwardRef needed
 const CustomInput = ({ label, ref, ...props }: {

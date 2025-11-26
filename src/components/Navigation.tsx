@@ -2,7 +2,7 @@ import { use } from 'react';
 import { AppContext } from '../contexts/AppContext';
 import { LanguageContext } from '../contexts/LanguageContext';
 import { LanguageSwitcher } from './LanguageSwitcher';
-import styles from './Navigation.module.css';
+import styles from './Navigation.module.scss';
 
 export const Navigation = () => {
   // React 19: use use() to read context (can even do it conditionally!)

@@ -2,7 +2,7 @@ import { use, useState, useActionState } from 'react';
 import { Form, Field } from 'react-final-form';
 import { saveFormData } from '../data/mockData';
 import { LanguageContext } from '../contexts/LanguageContext';
-import styles from './Examples.module.css';
+import styles from './Examples.module.scss';
 
 // React 18 approach: Final Form
 const FinalFormExample = () => {
@@ -239,11 +239,7 @@ const React19FormExample = () => {
 
         {state.message && (
           <div 
-            className={styles.result}
-            style={{
-              color: state.success ? '#155724' : '#721c24',
-              backgroundColor: state.success ? '#d4edda' : '#f8d7da',
-            }}
+            className={`${styles.message} ${state.success ? styles.messageSuccess : styles.messageError}`}
           >
             {state.message}
           </div>

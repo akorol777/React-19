@@ -1,6 +1,6 @@
 import { use, useState } from 'react';
 import { LanguageContext } from '../contexts/LanguageContext';
-import styles from './Examples.module.css';
+import styles from './Examples.module.scss';
 
 // Simulation of different pages with different meta tags
 const PageHome = ({ t }: { t: any }) => {

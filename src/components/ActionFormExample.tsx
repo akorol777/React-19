@@ -1,7 +1,7 @@
 import { use, useActionState } from 'react';
 import { saveFormData } from '../data/mockData';
 import { LanguageContext } from '../contexts/LanguageContext';
-import styles from './Examples.module.css';
+import styles from './Examples.module.scss';
 
 // Type for form state
 interface FormState {

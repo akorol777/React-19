@@ -1,6 +1,6 @@
 import { use } from 'react';
 import { LanguageContext } from '../contexts/LanguageContext';
-import styles from './HomePage.module.css';
+import styles from './HomePage.module.scss';
 
 // Home page with overview of new React 19 features
 export const HomePage = () => {

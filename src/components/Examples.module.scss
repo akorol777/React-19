@@ -247,6 +247,14 @@ ul, ol {
   cursor: not-allowed;
 }
 
+.buttonDanger {
+  background-color: #dc3545;
+  
+  &:hover:not(:disabled) {
+    background-color: #c82333;
+  }
+}
+
 .addButton {
   padding: 14px 24px;
   font-size: 16px;
@@ -444,6 +452,10 @@ ul, ol {
   margin-bottom: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: opacity 0.3s;
+}
+
+.todoItemOptimistic {
+  opacity: 0.6;
 }
 
 .todoContent {
