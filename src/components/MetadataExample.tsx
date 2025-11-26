@@ -201,7 +201,7 @@ function BlogPost({ post }) {
 }`}</pre>
             <div className={styles.comparisonNote}>
               <strong>{t.metadata.react18Problems}</strong>
-              <ul>
+              <ul className={styles.comparisonList}>
                 {t.metadata.react18ProblemsList.map((problem: string, index: number) => (
                   <li key={index}>{problem}</li>
                 ))}
@@ -227,7 +227,7 @@ function BlogPost({ post }) {
 }`}</pre>
             <div className={styles.comparisonNote}>
               <strong>{t.metadata.react19Benefits}</strong>
-              <ul>
+              <ul className={styles.comparisonList}>
                 {t.metadata.react19BenefitsList.map((benefit: string, index: number) => (
                   <li key={index}>{benefit}</li>
                 ))}
@@ -336,7 +336,9 @@ function BlogPost({ post }) {
         <h3 className={styles.sectionTitle}>{t.metadata.importantTitle}</h3>
         <ul className={styles.notesList}>
           {t.metadata.importantNotes.map((note: string, index: number) => (
-            <li key={index} dangerouslySetInnerHTML={{ __html: note }} />
+            <li key={index}>
+              ⚠️ <span dangerouslySetInnerHTML={{ __html: note }} />
+            </li>
           ))}
         </ul>
       </div>

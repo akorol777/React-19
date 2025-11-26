@@ -86,7 +86,12 @@ const translationsEn = {
         },
         use: {
           title: 'use() Hook',
-          description: 'New hook for reading promises and context conditionally',
+          abilities: [
+            'Read promises directly in components',
+            'Conditional context reading',
+            'Cleaner code without useEffect',
+            'Automatic Suspense support',
+          ],
         },
         formStatus: {
           title: 'useFormStatus',
@@ -398,7 +403,7 @@ const translationsEn = {
           description: 'Integration with jQuery, D3.js, Three.js and others',
         },
       ],
-      importantTitle: '⚠️ Important to remember:',
+      importantTitle: 'Important to remember:',
       importantNotes: [
         '<strong>Avoid manual DOM changes:</strong> React should manage the DOM. Use ref only for things React can\'t do (focus, scroll, measurements).',
         '<strong>Don\'t read/change state via ref:</strong> Use useState/useReducer for state.',
@@ -515,7 +520,7 @@ const translationsEn = {
         '✅ <strong>Better DX:</strong> autocompletion, typing work better',
         '✅ <strong>Streaming-friendly:</strong> works with React Server Components',
       ],
-      importantTitle: '⚠️ Important:',
+      importantTitle: 'Important:',
       importantNotes: [
         'React automatically moves these tags to <code>&lt;head&gt;</code>',
         'When component changes, old meta tags are replaced with new ones',
@@ -735,7 +740,12 @@ const translationsUk = {
         },
         use: {
           title: 'Хук use()',
-          description: 'Новий хук для читання промісів та контексту умовно',
+          abilities: [
+            'Читання промісів безпосередньо в компонентах',
+            'Умовне читання контексту',
+            'Чистіший код без useEffect',
+            'Автоматична підтримка Suspense',
+          ],
         },
         formStatus: {
           title: 'useFormStatus',
@@ -1047,7 +1057,7 @@ const translationsUk = {
           description: 'Інтеграція з jQuery, D3.js, Three.js та іншими',
         },
       ],
-      importantTitle: '⚠️ Важливо памʼятати:',
+      importantTitle: 'Важливо памʼятати:',
       importantNotes: [
         '<strong>Уникайте ручних змін DOM:</strong> React має керувати DOM. Використовуйте ref тільки для того, що React не може (фокус, скрол, виміри).',
         '<strong>Не читайте/змінюйте стан через ref:</strong> Використовуйте useState/useReducer для стану.',
@@ -1164,7 +1174,7 @@ const translationsUk = {
         '✅ <strong>Кращий DX:</strong> автодоповнення, типізація працюють краще',
         '✅ <strong>Streaming-friendly:</strong> працює з React Server Components',
       ],
-      importantTitle: '⚠️ Важливо:',
+      importantTitle: 'Важливо:',
       importantNotes: [
         'React автоматично переміщує ці теги в <code>&lt;head&gt;</code>',
         'При зміні компонента, старі мета-теги замінюються новими',

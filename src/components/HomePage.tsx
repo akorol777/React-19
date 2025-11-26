@@ -44,9 +44,11 @@ export const HomePage = () => {
           <div className={styles.featureCard}>
             <div className={styles.featureIcon}>🎣</div>
             <h3 className={styles.featureTitle}>{t.home.features.use.title}</h3>
-            <p className={styles.featureDesc}>
-              {t.home.features.use.description}
-            </p>
+            <ul className={styles.featureList}>
+              {t.home.features.use.abilities.map((ability, index) => (
+                <li key={index} className={styles.featureListItem}>{ability}</li>
+              ))}
+            </ul>
           </div>
 
           <div className={styles.featureCard}>

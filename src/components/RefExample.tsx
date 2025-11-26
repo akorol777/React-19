@@ -245,7 +245,9 @@ const Input = ({ ref, ...props }: {
         <h3 className={styles.sectionTitle}>{t.ref.importantTitle}</h3>
         <ul className={styles.notesList}>
           {t.ref.importantNotes.map((note: string, index: number) => (
-            <li key={index} dangerouslySetInnerHTML={{ __html: note }} />
+            <li key={index}>
+              ⚠️ <span dangerouslySetInnerHTML={{ __html: note }} />
+            </li>
           ))}
         </ul>
       </div>
