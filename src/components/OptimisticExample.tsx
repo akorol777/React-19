@@ -92,6 +92,28 @@ export const OptimisticExample = () => {
         {t.optimistic.description}
       </p>
 
+      {/* Comparison with React 18 */}
+      <div className={styles.comparison}>
+        <h3 className={styles.sectionTitle}>{t.optimistic.comparisonTitle}</h3>
+        <div className={styles.comparisonGrid}>
+          <div className={styles.comparisonItem}>
+            <h4 className={styles.comparisonTitle}>{t.optimistic.react18.title}</h4>
+            <pre className={styles.code}>{t.optimistic.react18.codeExample}</pre>
+            <div className={styles.whenToUse}>
+              <p className={styles.comparisonNote}>{t.optimistic.react18.delay}</p>
+            </div>
+          </div>
+
+          <div className={styles.comparisonItem}>
+            <h4 className={styles.comparisonTitle}>{t.optimistic.react19.title}</h4>
+            <pre className={styles.code}>{t.optimistic.react19.codeExample}</pre>
+            <div className={styles.whenToUse}>
+              <p className={styles.comparisonNote}>{t.optimistic.react19.delay}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Explanation of how it works */}
       <div className={styles.howItWorks}>
         <h3 className={styles.sectionTitle}>{t.optimistic.howItWorks}</h3>
@@ -188,32 +210,16 @@ export const OptimisticExample = () => {
         </ul>
       </div>
 
-      {/* Comparison with React 18 */}
-      <div className={styles.comparison}>
-        <h3 className={styles.sectionTitle}>{t.optimistic.comparisonTitle}</h3>
-        <div className={styles.comparisonGrid}>
-          <div className={styles.comparisonItem}>
-            <h4 className={styles.comparisonTitle}>{t.optimistic.react18.title}</h4>
-            <pre className={styles.code}>{`${t.optimistic.react18.comment1}
-const handleAdd = async () => {
-  setLoading(true);
-  await addTodo(newTodo);
-  setLoading(false);
-  ${t.optimistic.react18.comment2}
-};`}</pre>
-            <p className={styles.comparisonNote}>{t.optimistic.react18.delay}</p>
-          </div>
-
-          <div className={styles.comparisonItem}>
-            <h4 className={styles.comparisonTitle}>{t.optimistic.react19.title}</h4>
-            <pre className={styles.code}>{`${t.optimistic.react19.comment1}
-addOptimisticTodo(newTodo);
-${t.optimistic.react19.comment2}
-await addTodo(newTodo);
-${t.optimistic.react19.comment3}`}</pre>
-            <p className={styles.comparisonNote}>{t.optimistic.react19.delay}</p>
-          </div>
-        </div>
+      {/* Important notes */}
+      <div className={styles.notes}>
+        <h3 className={styles.sectionTitle}>{t.optimistic.importantTitle}</h3>
+        <ul className={styles.notesList}>
+          {t.optimistic.importantNotes.map((note: string, index: number) => (
+            <li key={index}>
+              ⚠️ <span dangerouslySetInnerHTML={{ __html: note }} />
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );

@@ -1,7 +1,6 @@
 import { use, Suspense, useState } from 'react';
 import type { User, Post } from '../data/mockData';
 import { fetchUser, fetchPosts } from '../data/mockData';
-import { AppContext } from '../contexts/AppContext';
 import { LanguageContext } from '../contexts/LanguageContext';
 import styles from './Examples.module.scss';
 
@@ -47,33 +46,6 @@ const PostsList = ({ postsPromise }: { postsPromise: Promise<Post[]> }) => {
   );
 };
 
-// Example of conditional use() for context
-const ConditionalContextExample = ({ showContext, t }: { showContext: boolean; t: any }) => {
-  // React 19: use() can be called conditionally! 
-  // In React 18 this was impossible with useContext
-  if (showContext) {
-    // This is OK in React 19!
-    const context = use(AppContext);
-    if (!context) return null;
-    
-    return (
-      <div className={styles.contextExample}>
-        <strong>{t.contextUsageStrong}</strong>
-        <br />
-        {t.currentView} {context.currentView}
-        <br />
-        {t.totalTodos} {context.todos.length}
-      </div>
-    );
-  }
-
-  return (
-    <div className={styles.contextExample}>
-      <em>{t.contextNotShown}</em>
-    </div>
-  );
-};
-
 // Main component
 export const UseHookExample = () => {
   const langContext = use(LanguageContext);
@@ -81,7 +53,6 @@ export const UseHookExample = () => {
   const { t } = langContext;
 
   const [userId, setUserId] = useState<number>(1);
-  const [showContext, setShowContext] = useState<boolean>(false);
   const [loadData, setLoadData] = useState<boolean>(false);
 
   // Create promises (they start immediately)
@@ -94,11 +65,11 @@ export const UseHookExample = () => {
 
       <p className={styles.description}>{t.useHook.description}</p>
 
-      <div className={styles.explanation}>
+      <div className={styles.benefits}>
         <h3 className={styles.sectionTitle}>{t.useHook.whatCanDo}</h3>
         <ul className={styles.list}>
           {t.useHook.capabilities.map((cap, index) => (
-            <li key={index}>{cap}</li>
+            <li key={index}>✅ {cap}</li>
           ))}
         </ul>
       </div>
@@ -183,73 +154,40 @@ export const UseHookExample = () => {
         )}
       </div>
 
-      {/* Example 2: Conditional context usage */}
-      <div className={styles.section}>
-        <h3 className={styles.sectionTitle}>
-          2️⃣ {t.useHook.conditionalContextTitle}
-        </h3>
+      {/* Comparison with React 18 */}
+      <div className={styles.comparison}>
+        <h3 className={styles.sectionTitle}>{t.useHook.comparisonTitle}</h3>
+        <div className={styles.comparisonGrid}>
+          <div className={styles.comparisonItem}>
+            <h4 className={styles.comparisonTitle}>{t.useHook.react18.title}</h4>
+            <pre className={styles.code}>{t.useHook.react18.codeExample}</pre>
+          </div>
 
-        <label className={styles.checkboxLabel}>
-          <input
-            type="checkbox"
-            checked={showContext}
-            onChange={(e) => setShowContext(e.target.checked)}
-            className={styles.checkbox}
-          />
-          {showContext
-            ? t.useHook.hideContextButton
-            : t.useHook.showContextButton}
-        </label>
-
-        <ConditionalContextExample showContext={showContext} t={t.useHook} />
-      </div>
-
-      {/* Code examples */}
-      <div className={styles.codeExamples}>
-        <h3 className={styles.sectionTitle}>💻 {t.useHook.codeExamplesTitle}</h3>
-
-        <div className={styles.codeBlock}>
-          <h4 className={styles.codeTitle}>{t.useHook.promiseUnwrapCode}</h4>
-          <pre className={styles.code}>{`// Pass promise to component
-<UserProfile userPromise={fetchUser(1)} />
-
-// In component unwrap via use()
-function UserProfile({ userPromise }) {
-  const user = use(userPromise); // Wait for result
-  return <div>{user.name}</div>;
-}`}</pre>
-        </div>
-
-        <div className={styles.codeBlock}>
-          <h4 className={styles.codeTitle}>
-            {t.useHook.conditionalContextCode}
-          </h4>
-          <pre className={styles.code}>{`// React 18: ❌ This was NOT allowed
-function Component({ showUser }) {
-  if (showUser) {
-    const user = useContext(UserContext); // ERROR!
-    return <div>{user.name}</div>;
-  }
-  return null;
-}
-
-// React 19: ✅ use() can be called conditionally!
-function Component({ showUser }) {
-  if (showUser) {
-    const user = use(UserContext); // OK!
-    return <div>{user.name}</div>;
-  }
-  return null;
-}`}</pre>
+          <div className={styles.comparisonItem}>
+            <h4 className={styles.comparisonTitle}>{t.useHook.react19.title}</h4>
+            <pre className={styles.code}>{t.useHook.react19.codeExample}</pre>
+          </div>
         </div>
       </div>
 
       {/* Benefits */}
       <div className={styles.benefits}>
-        <h3 className={styles.sectionTitle}>💡 {t.useHook.benefitsTitle}</h3>
+        <h3 className={styles.sectionTitle}>{t.useHook.benefitsTitle}</h3>
         <ul className={styles.list}>
           {t.useHook.benefits.map((benefit: string, index: number) => (
             <li key={index} dangerouslySetInnerHTML={{ __html: benefit }} />
+          ))}
+        </ul>
+      </div>
+
+      {/* Important notes */}
+      <div className={styles.notes}>
+        <h3 className={styles.sectionTitle}>{t.useHook.importantTitle}</h3>
+        <ul className={styles.notesList}>
+          {t.useHook.importantNotes.map((note: string, index: number) => (
+            <li key={index}>
+              ⚠️ <span dangerouslySetInnerHTML={{ __html: note }} />
+            </li>
           ))}
         </ul>
       </div>

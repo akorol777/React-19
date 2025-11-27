@@ -382,13 +382,13 @@ export const FinalFormComparison = () => {
       </div>
 
       {/* Conclusion */}
-      <div className={styles.conclusion}>
-        <h3 className={styles.sectionTitle}>📌 {tf.conclusionSection.title}</h3>
-        {tf.conclusionSection.paragraphs.map((paragraph: string, index: number) => (
-          <p key={index} className={styles.conclusionText}>
-            {paragraph}
-          </p>
-        ))}
+      <div className={styles.benefits}>
+        <h3 className={styles.sectionTitle}>{tf.conclusionSection.title}</h3>
+        <ul className={styles.list}>
+          {tf.conclusionSection.benefits.map((benefit: string, index: number) => (
+            <li key={index}>✅ {benefit}</li>
+          ))}
+        </ul>
       </div>
     </div>
   );

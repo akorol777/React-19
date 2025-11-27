@@ -79,17 +79,25 @@ ul, ol {
   margin-bottom: 24px;
 }
 
-.notes {
+.explanation {
   padding: 20px;
-  background-color: #f8d7da;
+  background-color: #f8f9fa;
   border-radius: 12px;
   margin-bottom: 24px;
+}
+
+.notes {
+  padding: 20px;
+  background-color: #fff3cd;
+  border-radius: 12px;
+  margin-bottom: 24px;
+  border-left: 4px solid #ffc107;
 }
 
 .notesList {
   margin-bottom: 0;
   line-height: 1.8;
-  color: #721c24;
+  color: #856404;
   list-style: none;
   padding-left: 0;
 }
@@ -1071,19 +1079,6 @@ ul, ol {
   gap: 12px;
 }
 
-.conclusion {
-  padding: 20px;
-  background-color: #d4edda;
-  border-radius: 12px;
-  border: 2px solid #c3e6cb;
-}
-
-.conclusionText {
-  font-size: 15px;
-  line-height: 1.7;
-  color: #155724;
-  margin-bottom: 12px;
-}
 
 /* === Problem/Solution Sections === */
 .problemSection {

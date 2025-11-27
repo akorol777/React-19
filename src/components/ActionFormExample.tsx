@@ -153,9 +153,9 @@ const handleSubmit = async (e) => {
         )}
       </form>
 
-      {/* Explanation */}
-      <div className={styles.explanation}>
-        <h3 className={styles.explanationTitle}>💡 {t.actions.benefits}</h3>
+      {/* Benefits */}
+      <div className={styles.benefits}>
+        <h3 className={styles.sectionTitle}>{t.actions.benefits}</h3>
         <ul className={styles.list}>
           {t.actions.benefitsList.map((benefit, index) => (
             <li key={index}>✅ {benefit}</li>

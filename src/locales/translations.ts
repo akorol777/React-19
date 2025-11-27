@@ -197,6 +197,20 @@ const translationsEn = {
       comment1: '// User waits for response',
       comment2: '// Only now sees changes',
       delay: '⏱️ Delay: 1-2 seconds',
+      codeExample: `// React 18: Manual state management
+const [todos, setTodos] = useState([]);
+const [loading, setLoading] = useState(false);
+
+const addTodo = async (newTodo) => {
+  setLoading(true);           // Show loader
+  
+  await saveTodo(newTodo);    // Wait for server... 2 seconds... 😴
+  
+  setTodos([...todos, newTodo]); // Only now user sees the result
+  setLoading(false);
+};
+
+// Problem: User waits 1-2 seconds and sees loader 🐌`,
     },
     react19: {
       title: '✅ React 19 (with optimism)',
@@ -204,7 +218,30 @@ const translationsEn = {
       comment2: '// Request in background',
       comment3: '// If error - auto rollback',
       delay: '⚡ Delay: 0 ms!',
+      codeExample: `// React 19: Optimistic updates
+const [optimisticTodos, addOptimisticTodo] = useOptimistic(
+  todos,                    // Real todos
+  (state, newTodo) => {     // How to update optimistically
+    return [...state, newTodo];
+  }
+);
+
+const addTodo = async (newTodo) => {
+  addOptimisticTodo(newTodo);  // Show instantly! ⚡
+  
+  await saveTodo(newTodo);     // Request in background
+  // If error - React will rollback automatically!
+};
+
+// Result: User sees result instantly! 🚀`,
     },
+    importantTitle: 'Important:',
+    importantNotes: [
+      'Use <strong>only for operations that almost always succeed</strong> (like, add to cart, mark as complete)',
+      '<strong>Don\'t use for critical operations</strong> (payment, account deletion) - there you need to wait for server confirmation',
+      'React <strong>automatically rolls back changes on error</strong> - you don\'t need to write code for this',
+      'Works best in combination with Actions and useActionState',
+    ],
   },
     
   useHook: {
@@ -263,6 +300,50 @@ const translationsEn = {
       '✅ <strong>Universal:</strong> works with promises and context',
       '✅ <strong>SSR-friendly:</strong> perfect for server components',
       '✅ <strong>Less code:</strong> one hook instead of several',
+    ],
+    comparisonTitle: '⚖️ Comparison of approaches:',
+    react18: {
+      title: '❌ React 18 (strict rules)',
+      codeExample: `// React 18: Cannot call conditionally
+function Component({ showUser }) {
+  // ❌ ERROR: Hooks must be called in exact order
+  if (showUser) {
+    const user = useContext(UserContext); // ❌
+    return <div>{user.name}</div>;
+  }
+  return null;
+}
+
+// Had to do workaround:
+const user = useContext(UserContext);
+if (showUser) {
+  return <div>{user.name}</div>;
+}
+return null;`,
+    },
+    react19: {
+      title: '✅ React 19 (freedom!)',
+      codeExample: `// React 19: Can call conditionally!
+function Component({ showUser }) {
+  // ✅ OK: use() can be called anywhere
+  if (showUser) {
+    const user = use(UserContext); // ✅
+    return <div>{user.name}</div>;
+  }
+  return null;
+}
+
+// Also works in loops, ternary, etc.
+const data = isLoading 
+  ? use(loadingPromise) 
+  : defaultData;`,
+    },
+    importantTitle: 'Important to understand:',
+    importantNotes: [
+      '<strong>use() works with Suspense:</strong> while promise is loading, Suspense fallback is shown. No need to manually manage loading states',
+      '<strong>Promises should be cached:</strong> don\'t create new promise on every render. Use cache or create promise outside component',
+      '<strong>Doesn\'t replace all hooks:</strong> useState, useEffect are still needed! use() is only for promises and context',
+      'Works best with <strong>Server Components</strong> and modern React patterns',
     ],
     userProfileTitle: 'User Profile',
   },
@@ -606,10 +687,12 @@ const translationsEn = {
       },
       conclusionSection: {
         title: 'Conclusion:',
-        paragraphs: [
-          'React 19 Actions is a great choice for most forms. But Final Form is still relevant for very complex cases.',
-          'In your project you can use both approaches simultaneously: new simple forms in React 19, and keep complex ones on Final Form.',
-          'The main thing: React 19 takes a big step towards simplifying form work and reducing dependency on third-party libraries! 🚀',
+        benefits: [
+          'React 19 Actions is a great choice for most forms',
+          'Final Form is still relevant for very complex cases',
+          'You can use both approaches simultaneously in your project',
+          'React 19 takes a big step towards simplifying form work 🚀',
+          'Reduces dependency on third-party libraries',
         ],
       },
       form: {
@@ -851,6 +934,20 @@ const translationsUk = {
         comment1: '// Користувач чекає відповіді',
         comment2: '// Тільки тепер побачить зміни',
         delay: '⏱️ Затримка: 1-2 секунди',
+        codeExample: `// React 18: Ручне керування станом
+const [todos, setTodos] = useState([]);
+const [loading, setLoading] = useState(false);
+
+const addTodo = async (newTodo) => {
+  setLoading(true);           // Показуємо лоадер
+  
+  await saveTodo(newTodo);    // Чекаємо сервер... 2 секунди... 😴
+  
+  setTodos([...todos, newTodo]); // Тільки тепер користувач побачить
+  setLoading(false);
+};
+
+// Проблема: Користувач чекає 1-2 секунди і дивиться на лоадер 🐌`,
       },
       react19: {
         title: '✅ React 19 (з оптимізмом)',
@@ -858,7 +955,30 @@ const translationsUk = {
         comment2: '// У фоні йде запит',
         comment3: '// Якщо помилка - авто відкат',
         delay: '⚡ Затримка: 0 мс!',
+        codeExample: `// React 19: Оптимістичні оновлення
+const [optimisticTodos, addOptimisticTodo] = useOptimistic(
+  todos,                    // Реальні todos
+  (state, newTodo) => {     // Як оновити оптимістично
+    return [...state, newTodo];
+  }
+);
+
+const addTodo = async (newTodo) => {
+  addOptimisticTodo(newTodo);  // Показуємо одразу! ⚡
+  
+  await saveTodo(newTodo);     // У фоні йде запит
+  // Якщо помилка - React сам відкотить зміни!
+};
+
+// Результат: Користувач бачить результат миттєво! 🚀`,
       },
+      importantTitle: 'Важливо:',
+      importantNotes: [
+        'Використовуйте <strong>тільки для операцій, які майже завжди спрацьовують</strong> (лайк, додати в кошик, позначити виконаним)',
+        '<strong>Не використовуйте для критичних операцій</strong> (оплата, видалення акаунту) - там потрібно чекати підтвердження сервера',
+        'React <strong>автоматично відкочує зміни при помилці</strong> - вам не потрібно писати код для цього',
+        'Найкраще працює в комбінації з Actions та useActionState',
+      ],
     },
     
     useHook: {
@@ -917,6 +1037,50 @@ const translationsUk = {
         '✅ <strong>Універсальний:</strong> працює з промісами та контекстом',
         '✅ <strong>SSR-friendly:</strong> ідеально для серверних компонентів',
         '✅ <strong>Менше коду:</strong> один хук замість декількох',
+      ],
+      comparisonTitle: '⚖️ Порівняння підходів:',
+      react18: {
+        title: '❌ React 18 (суворі правила)',
+        codeExample: `// React 18: Не можна викликати умовно
+function Component({ showUser }) {
+  // ❌ ПОМИЛКА: Хуки мають викликатись в точному порядку
+  if (showUser) {
+    const user = useContext(UserContext); // ❌
+    return <div>{user.name}</div>;
+  }
+  return null;
+}
+
+// Доводилось робити обхідний шлях:
+const user = useContext(UserContext);
+if (showUser) {
+  return <div>{user.name}</div>;
+}
+return null;`,
+      },
+      react19: {
+        title: '✅ React 19 (свобода!)',
+        codeExample: `// React 19: Можна викликати умовно!
+function Component({ showUser }) {
+  // ✅ ОК: use() можна викликати де завгодно
+  if (showUser) {
+    const user = use(UserContext); // ✅
+    return <div>{user.name}</div>;
+  }
+  return null;
+}
+
+// Також працює в циклах, тернарних операторах і т.д.
+const data = isLoading 
+  ? use(loadingPromise) 
+  : defaultData;`,
+      },
+      importantTitle: 'Важливо розуміти:',
+      importantNotes: [
+        '<strong>use() працює з Suspense:</strong> поки проміс завантажується, показується Suspense fallback. Не потрібно вручну керувати loading станами',
+        '<strong>Проміси мають бути кешовані:</strong> не створюйте новий проміс при кожному рендері. Використовуйте кеш або створюйте проміс поза компонентом',
+        '<strong>Не замінює всі хуки:</strong> useState, useEffect - все ще потрібні! use() тільки для промісів і контексту',
+        'Найкраще працює з <strong>Server Components</strong> та сучасними React патернами',
       ],
       userProfileTitle: 'Профіль користувача',
     },
@@ -1260,10 +1424,12 @@ const translationsUk = {
       },
       conclusionSection: {
         title: 'Висновок:',
-        paragraphs: [
-          'React 19 Actions - це чудовий вибір для більшості форм. Але Final Form все ще актуальний для дуже складних випадків.',
-          'На вашому проекті можна використовувати обидва підходи одночасно: нові прості форми на React 19, а складні залишити на Final Form.',
-          'Головне: React 19 робить велике крок у напрямку спрощення роботи з формами та зменшення залежності від сторонніх бібліотек! 🚀',
+        benefits: [
+          'React 19 Actions - чудовий вибір для більшості форм',
+          'Final Form актуальний для дуже складних випадків',
+          'Можна використовувати обидва підходи одночасно',
+          'React 19 спрощує роботу з формами 🚀',
+          'Зменшує залежність від сторонніх бібліотек',
         ],
       },
       form: {
