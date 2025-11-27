@@ -377,6 +377,72 @@ const data = isLoading
       smartButton: {
         title: '🔘 Custom button:',
       },
+      realExamplesTitle: '🔥 Real examples:',
+      realExamples: {
+        smartButton: {
+          title: '1. Smart button:',
+          code: `function SmartButton() {
+  const { pending } = useFormStatus();
+  
+  return (
+    <button disabled={pending}>
+      {pending ? '⏳ Submitting...' : '📤 Submit'}
+    </button>
+  );
+}`,
+        },
+        smartInput: {
+          title: '2. Smart input (locked during submission):',
+          code: `function SmartInput({ name, placeholder }) {
+  const { pending } = useFormStatus();
+  
+  return (
+    <input 
+      name={name}
+      placeholder={placeholder}
+      disabled={pending}  // Auto-locked!
+    />
+  );
+}`,
+        },
+        progressIndicator: {
+          title: '3. Progress indicator:',
+          code: `function ProgressIndicator() {
+  const { pending } = useFormStatus();
+  
+  if (!pending) return null;
+  
+  return <div>⏳ Please wait, sending data...</div>;
+}`,
+        },
+      },
+      importantRuleTitle: '⚠️ Important rule:',
+      importantRuleText: 'useFormStatus works ONLY in child components of the form!',
+      importantRuleExample: {
+        wrong: {
+          title: '❌ DOESN\'T WORK - called inside the form itself',
+          code: `function MyForm() {
+  const { pending } = useFormStatus();  // ❌ Returns null!
+  
+  return <form>...</form>;
+}`,
+        },
+        correct: {
+          title: '✅ WORKS - called in child component',
+          code: `function MyForm() {
+  return (
+    <form action={submitAction}>
+      <SubmitButton />  {/* ✅ Works here! */}
+    </form>
+  );
+}
+
+function SubmitButton() {
+  const { pending } = useFormStatus();  // ✅ OK!
+  return <button disabled={pending}>Submit</button>;
+}`,
+        },
+      },
       benefitsTitle: '💡 useFormStatus Benefits:',
       benefitsList: [
         '✅ <strong>No prop drilling:</strong> no need to pass state through props',
@@ -384,6 +450,13 @@ const data = isLoading
         '✅ <strong>Less code:</strong> no need for additional useState for loading',
         '✅ <strong>Automatic sync:</strong> all components see actual state',
         '✅ <strong>Access to form data:</strong> can see what is being sent',
+      ],
+      importantTitle: 'Important:',
+      importantNotes: [
+        '<strong>Only works in child components:</strong> cannot be called directly in the form component, only in its children',
+        '<strong>Requires Actions:</strong> form must have an action (function or URL) for useFormStatus to work',
+        '<strong>Automatic synchronization:</strong> all child components automatically see the same status without prop passing',
+        'Perfect for <strong>reusable UI libraries</strong> - create once, use everywhere',
       ],
       apiSection: {
         title: '📖 useFormStatus API:',
@@ -1114,13 +1187,86 @@ const data = isLoading
       smartButton: {
         title: '🔘 Кастомна кнопка:',
       },
+      realExamplesTitle: '🔥 Реальні приклади:',
+      realExamples: {
+        smartButton: {
+          title: '1. Розумна кнопка:',
+          code: `function SmartButton() {
+  const { pending } = useFormStatus();
+  
+  return (
+    <button disabled={pending}>
+      {pending ? '⏳ Відправка...' : '📤 Відправити'}
+    </button>
+  );
+}`,
+        },
+        smartInput: {
+          title: '2. Розумний інпут (блокується під час відправки):',
+          code: `function SmartInput({ name, placeholder }) {
+  const { pending } = useFormStatus();
+  
+  return (
+    <input 
+      name={name}
+      placeholder={placeholder}
+      disabled={pending}  // Автоматично блокується!
+    />
+  );
+}`,
+        },
+        progressIndicator: {
+          title: '3. Індикатор прогресу:',
+          code: `function ProgressIndicator() {
+  const { pending } = useFormStatus();
+  
+  if (!pending) return null;
+  
+  return <div>⏳ Зачекайте, відправляємо дані...</div>;
+}`,
+        },
+      },
+      importantRuleTitle: '⚠️ Важливе правило:',
+      importantRuleText: 'useFormStatus працює ТІЛЬКИ в дочірніх компонентах форми!',
+      importantRuleExample: {
+        wrong: {
+          title: '❌ НЕ ПРАЦЮЄ - викликається всередині самої форми',
+          code: `function MyForm() {
+  const { pending } = useFormStatus();  // ❌ Поверне null!
+  
+  return <form>...</form>;
+}`,
+        },
+        correct: {
+          title: '✅ ПРАЦЮЄ - викликається в дочірньому компоненті',
+          code: `function MyForm() {
+  return (
+    <form action={submitAction}>
+      <SubmitButton />  {/* ✅ Тут працює! */}
+    </form>
+  );
+}
+
+function SubmitButton() {
+  const { pending } = useFormStatus();  // ✅ OK!
+  return <button disabled={pending}>Відправити</button>;
+}`,
+        },
+      },
       benefitsTitle: '💡 Переваги useFormStatus:',
       benefitsList: [
         '✅ <strong>Без prop drilling:</strong> не потрібно передавати стан через пропси',
-        '✅ <strong>Переісвикористовувані компоненти:</strong> кнопки, інпути знають все самі',
+        '✅ <strong>Багаторазово використовувані компоненти:</strong> кнопки, інпути знають все самі',
         '✅ <strong>Менше коду:</strong> не потрібен додатковий useState для loading',
         '✅ <strong>Автоматична синхронізація:</strong> всі компоненти бачать актуальний стан',
         '✅ <strong>Доступ до даних форми:</strong> можна побачити що відправляється',
+      ],
+      importantTitle: 'Важливо:',
+      importantNotes: [
+        '<strong>Працює тільки в дочірніх компонентах:</strong> не можна викликати безпосередньо в компоненті форми, тільки в його дочірніх елементах',
+        '<strong>Потрібні Actions:</strong> форма має мати action (функцію або URL), щоб useFormStatus працював',
+        '<strong>Автоматична синхронізація:</strong> всі дочірні компоненти автоматично бачать однаковий статус без передачі пропсів',
+        'Ідеально для <strong>бібліотек багаторазового використання</strong> - створи один раз, використовуй скрізь',
       ],
       apiSection: {
         title: '📖 useFormStatus API:',

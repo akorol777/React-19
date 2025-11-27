@@ -226,6 +226,42 @@ function SubmitButton() {
         </form>
       </div>
 
+      {/* Real examples */}
+      <div className={styles.codeExamples}>
+        <h3 className={styles.sectionTitle}>{t.formStatus.realExamplesTitle}</h3>
+
+        <div className={styles.codeBlock}>
+          <h4 className={styles.codeTitle}>{t.formStatus.realExamples.smartButton.title}</h4>
+          <pre className={styles.code}>{t.formStatus.realExamples.smartButton.code}</pre>
+        </div>
+
+        <div className={styles.codeBlock}>
+          <h4 className={styles.codeTitle}>{t.formStatus.realExamples.smartInput.title}</h4>
+          <pre className={styles.code}>{t.formStatus.realExamples.smartInput.code}</pre>
+        </div>
+
+        <div className={styles.codeBlock}>
+          <h4 className={styles.codeTitle}>{t.formStatus.realExamples.progressIndicator.title}</h4>
+          <pre className={styles.code}>{t.formStatus.realExamples.progressIndicator.code}</pre>
+        </div>
+      </div>
+
+      {/* Important rule */}
+      <div className={styles.explanation}>
+        <h3 className={styles.sectionTitle}>{t.formStatus.importantRuleTitle}</h3>
+        <p className={styles.ruleText}>{t.formStatus.importantRuleText}</p>
+
+        <div className={styles.codeBlock}>
+          <h4 className={styles.codeTitle}>{t.formStatus.importantRuleExample.wrong.title}</h4>
+          <pre className={styles.code}>{t.formStatus.importantRuleExample.wrong.code}</pre>
+        </div>
+
+        <div className={styles.codeBlock}>
+          <h4 className={styles.codeTitle}>{t.formStatus.importantRuleExample.correct.title}</h4>
+          <pre className={styles.code}>{t.formStatus.importantRuleExample.correct.code}</pre>
+        </div>
+      </div>
+
       {/* Benefits */}
       <div className={styles.benefits}>
         <h3 className={styles.sectionTitle}>{t.formStatus.benefitsTitle}</h3>
@@ -270,6 +306,18 @@ function SubmitButton() {
             </tr>
           </tbody>
         </table>
+      </div>
+
+      {/* Important notes */}
+      <div className={styles.notes}>
+        <h3 className={styles.sectionTitle}>{t.formStatus.importantTitle}</h3>
+        <ul className={styles.notesList}>
+          {t.formStatus.importantNotes.map((note: string, index: number) => (
+            <li key={index}>
+              ⚠️ <span dangerouslySetInnerHTML={{ __html: note }} />
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );
