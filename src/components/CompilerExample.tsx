@@ -91,6 +91,63 @@ export const CompilerExample = () => {
         </ul>
       </div>
 
+      {/* What's Working Now */}
+      <div className={styles.benefits}>
+        <h3 className={styles.sectionTitle}>{t.compiler.whatsWorkingTitle}</h3>
+        
+        <h4 className={styles.subsectionTitle}>{t.compiler.whatsWorking.metaTitle}</h4>
+        <ul className={styles.list}>
+          {t.compiler.whatsWorking.metaList.map((item: string, index: number) => (
+            <li key={index}>✅ {item}</li>
+          ))}
+        </ul>
+
+        <h4 className={styles.subsectionTitle} style={{ marginTop: '20px' }}>{t.compiler.whatsWorking.resultsTitle}</h4>
+        <ul className={styles.list}>
+          {t.compiler.whatsWorking.resultsList.map((item: string, index: number) => (
+            <li key={index}>{item}</li>
+          ))}
+        </ul>
+      </div>
+
+      {/* Why Still Beta */}
+      <div className={styles.notes}>
+        <h3 className={styles.sectionTitle}>{t.compiler.whyBetaTitle}</h3>
+        
+        <h4 className={styles.subsectionTitle}>{t.compiler.whyBeta.patternsTitle}</h4>
+        <ul className={styles.notesList}>
+          {t.compiler.whyBeta.patternsList.map((item: string, index: number) => (
+            <li key={index}>⚠️ {item}</li>
+          ))}
+        </ul>
+
+        <h4 className={styles.subsectionTitle} style={{ marginTop: '15px' }}>{t.compiler.whyBeta.configTitle}</h4>
+        <ul className={styles.notesList}>
+          {t.compiler.whyBeta.configList.map((item: string, index: number) => (
+            <li key={index}>⚠️ {item}</li>
+          ))}
+        </ul>
+
+        <h4 className={styles.subsectionTitle} style={{ marginTop: '15px' }}>{t.compiler.whyBeta.unpredictableTitle}</h4>
+        <ul className={styles.notesList}>
+          {t.compiler.whyBeta.unpredictableList.map((item: string, index: number) => (
+            <li key={index}>⚠️ {item}</li>
+          ))}
+        </ul>
+      </div>
+
+      {/* Future Plans */}
+      <div className={styles.benefits}>
+        <h3 className={styles.sectionTitle}>{t.compiler.futurePlansTitle}</h3>
+        <ul className={styles.list}>
+          {t.compiler.futurePlans.map((plan: string, index: number) => (
+            <li key={index}>
+              🚀 <span dangerouslySetInnerHTML={{ __html: plan }} />
+            </li>
+          ))}
+        </ul>
+      </div>
+
       {/* How to enable */}
       <div className={styles.explanation}>
         <h3 className={styles.sectionTitle}>{t.compiler.howToEnableTitle}</h3>

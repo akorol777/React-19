@@ -1072,6 +1072,46 @@ const List = ({ items, onSelect }) => {
 };`,
         },
       },
+      whatsWorkingTitle: '✅ What\'s Working Now:',
+      whatsWorking: {
+        metaTitle: 'Meta uses in production:',
+        metaList: [
+          'Instagram - fully on React Compiler',
+          'Facebook.com - partially migrated',
+          'Threads - uses Compiler',
+          'WhatsApp Web - testing',
+        ],
+        resultsTitle: 'Results:',
+        resultsList: [
+          '📉 -15-20% code (removed useMemo/useCallback)',
+          '⚡ +5-10% performance (on average)',
+          '🐛 -30% bugs related to incorrect dependencies',
+        ],
+      },
+      whyBetaTitle: '⚠️ Why Still Beta:',
+      whyBeta: {
+        patternsTitle: 'Not all patterns supported:',
+        patternsList: [
+          'Some complex refs',
+          'Specific custom hooks',
+          'Legacy code patterns',
+        ],
+        configTitle: 'Requires additional configuration:',
+        configList: [
+          'Doesn\'t work "out of the box" for all projects',
+          'Sometimes need to help the compiler',
+        ],
+        unpredictableTitle: 'Can be unpredictable:',
+        unpredictableList: [
+          'May incorrectly optimize in edge cases',
+          'Requires thorough testing',
+        ],
+      },
+      futurePlansTitle: '🗓️ Future Plans:',
+      futurePlans: [
+        '<strong>React 20 (2025-2026):</strong> Compiler becomes stable, better pattern support, enabled by default',
+        '<strong>React 21+ (2026+):</strong> Compiler is the standard, useMemo/useCallback become legacy',
+      ],
       howToEnableTitle: '⚙️ How to enable:',
       howToEnable: {
         step1: '1. Install:',
@@ -2184,6 +2224,46 @@ const List = ({ items, onSelect }) => {
 };`,
         },
       },
+      whatsWorkingTitle: '✅ Що вже працює:',
+      whatsWorking: {
+        metaTitle: 'Meta використовує в продакшні:',
+        metaList: [
+          'Instagram - повністю на React Compiler',
+          'Facebook.com - частково мігрований',
+          'Threads - використовує Compiler',
+          'WhatsApp Web - тестують',
+        ],
+        resultsTitle: 'Результати:',
+        resultsList: [
+          '📉 -15-20% коду (прибрали useMemo/useCallback)',
+          '⚡ +5-10% швидкість (в середньому)',
+          '🐛 -30% багів пов\'язаних з неправильними залежностями',
+        ],
+      },
+      whyBetaTitle: '⚠️ Чому все ще Beta:',
+      whyBeta: {
+        patternsTitle: 'Не всі паттерни підтримуються:',
+        patternsList: [
+          'Деякі складні рефи',
+          'Специфічні хуки',
+          'Legacy код',
+        ],
+        configTitle: 'Потрібна додаткова конфігурація:',
+        configList: [
+          'Не працює "з коробки" для всіх проектів',
+          'Іноді треба допомагати компілятору',
+        ],
+        unpredictableTitle: 'Може бути непередбачуваним:',
+        unpredictableList: [
+          'В edge cases може неправильно оптимізувати',
+          'Треба тестувати ретельно',
+        ],
+      },
+      futurePlansTitle: '🗓️ Плани розвитку:',
+      futurePlans: [
+        '<strong>React 20 (2025-2026):</strong> Compiler стає стабільним, краща підтримка паттернів, увімкнено за замовчуванням',
+        '<strong>React 21+ (2026+):</strong> Compiler - стандарт, useMemo/useCallback стають legacy',
+      ],
       howToEnableTitle: '⚙️ Як увімкнути:',
       howToEnable: {
         step1: '1. Встановити:',
