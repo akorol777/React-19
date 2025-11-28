@@ -184,7 +184,7 @@ export const MetadataExample = () => {
             <h4 className={styles.comparisonTitle}>{t.metadata.react18Title}</h4>
             <pre className={styles.code}>{`import { Helmet } from 'react-helmet';
 
-function BlogPost({ post }) {
+const BlogPost = ({ post }) => {
   return (
     <>
       <Helmet>
@@ -198,7 +198,7 @@ function BlogPost({ post }) {
       <article>...</article>
     </>
   );
-}`}</pre>
+};`}</pre>
             <div className={styles.comparisonNote}>
               <strong>{t.metadata.react18Problems}</strong>
               <ul className={styles.comparisonList}>
@@ -212,7 +212,7 @@ function BlogPost({ post }) {
           <div className={styles.comparisonCard}>
             <h4 className={styles.comparisonTitle}>{t.metadata.react19Title}</h4>
             <pre className={styles.code}>{`// Just write tags!
-function BlogPost({ post }) {
+const BlogPost = ({ post }) => {
   return (
     <>
       <title>{post.title}</title>
@@ -224,7 +224,7 @@ function BlogPost({ post }) {
       <article>...</article>
     </>
   );
-}`}</pre>
+};`}</pre>
             <div className={styles.comparisonNote}>
               <strong>{t.metadata.react19Benefits}</strong>
               <ul className={styles.comparisonList}>
@@ -289,6 +289,21 @@ function BlogPost({ post }) {
               <p className={styles.tagDesc}>{tag.description}</p>
             </div>
           ))}
+        </div>
+      </div>
+
+      {/* Real code examples */}
+      <div className={styles.codeExamples}>
+        <h3 className={styles.sectionTitle}>{t.metadata.realExamplesTitle}</h3>
+
+        <div className={styles.codeBlock}>
+          <h4 className={styles.codeTitle}>{t.metadata.realExamples.blogPost.title}</h4>
+          <pre className={styles.code}>{t.metadata.realExamples.blogPost.code}</pre>
+        </div>
+
+        <div className={styles.codeBlock}>
+          <h4 className={styles.codeTitle}>{t.metadata.realExamples.product.title}</h4>
+          <pre className={styles.code}>{t.metadata.realExamples.product.code}</pre>
         </div>
       </div>
 

@@ -12,6 +12,7 @@ const translationsEn = {
       ref: 'ref as prop',
       metadata: 'Metadata',
       finalFormComparison: 'Forms Comparison',
+      compiler: 'React Compiler',
     },
     
   home: {
@@ -47,7 +48,6 @@ const translationsEn = {
       step2: 'Read explanations and comparisons with React 18',
       step3: 'Interact with interactive examples',
       step4: 'Check the console - there are many logs for understanding',
-      step5: 'Read the code - it\'s well commented',
     },
     reasons: {
       lessBoilerplate: {
@@ -115,6 +115,7 @@ const translationsEn = {
     actions: {
       title: 'React 19: Actions',
       description: 'Actions - a new way to handle asynchronous operations in forms. No more manual loading/error state management!',
+      comparisonTitle: '⚖️ Comparison of approaches:',
       react18Title: '❌ React 18',
       react19Title: '✅ React 19',
       benefits: 'Benefits:',
@@ -123,6 +124,76 @@ const translationsEn = {
         'Automatic error handling',
         'Simplified code',
         'Works with FormData by default',
+      ],
+      realExamplesTitle: '🔥 Real examples:',
+      realExamples: {
+        loginForm: {
+          title: '1. Simple login form:',
+          code: `const LoginForm = () => {
+  const [state, loginAction] = useActionState(
+    async (prev, formData) => {
+      const email = formData.get('email');
+      const password = formData.get('password');
+      
+      const response = await login(email, password);
+      return { success: true, user: response };
+    },
+    { success: false }
+  );
+
+  return (
+    <form action={loginAction}>
+      <input name="email" type="email" required />
+      <input name="password" type="password" required />
+      <button type="submit">Login</button>
+    </form>
+  );
+};`,
+        },
+        fileUpload: {
+          title: '2. Form with file upload:',
+          code: `const UploadForm = () => {
+  const [state, uploadAction, isPending] = useActionState(
+    async (prev, formData) => {
+      const file = formData.get('file');
+      
+      await uploadFile(file);
+      return { success: true, fileName: file.name };
+    },
+    { success: false }
+  );
+
+  return (
+    <form action={uploadAction}>
+      <input name="file" type="file" required />
+      <button disabled={isPending}>
+        {isPending ? 'Uploading...' : 'Upload'}
+      </button>
+      {state.success && <p>✅ {state.fileName} uploaded!</p>}
+    </form>
+  );
+};`,
+        },
+      },
+      apiSectionTitle: '📖 useActionState API:',
+      apiTable: {
+        returns: 'Returns',
+        parameter: 'Parameter',
+        type: 'Type',
+        description: 'Description',
+        state: 'Current state (result of last action)',
+        action: 'Function to pass to form action attribute',
+        isPending: 'Boolean indicating if action is in progress',
+        actionParam: 'Async function that receives (prevState, formData)',
+        initialState: 'Initial state value',
+      },
+      importantTitle: 'Important:',
+      importantNotes: [
+        '<strong>Actions automatically manage pending state:</strong> no need for manual useState for loading',
+        '<strong>Work with FormData by default:</strong> easy access to all form fields',
+        '<strong>Require React 19:</strong> not available in earlier versions',
+        '<strong>SSR/RSC compatible:</strong> work with Server Components out of the box',
+        '<strong>Automatic error boundaries:</strong> errors are caught and can be handled in state',
       ],
       example: 'Example:',
       form: {
@@ -352,6 +423,7 @@ const data = isLoading
       title: 'React 19: useFormStatus',
       whatsNew: 'What\'s new?',
       description: 'Any child component can get form status without passing props! Especially useful for reusable UI components.',
+      comparisonTitle: '⚖️ Comparison of approaches:',
       problemSection: {
         title: '😰 Problem in React 18:',
         text: 'For button to know form status, had to pass <code>isLoading</code> through props:',
@@ -495,14 +567,72 @@ function SubmitButton() {
       whatsNew: 'What\'s new?',
       description: 'In React 19 ref can be used as a regular prop without forwardRef wrapper',
       comparisonTitle: '⚖️ Comparison of approaches:',
-      react18Title: '❌ React 18',
+      react18Title: '❌ React 18 (with forwardRef)',
+      react18Code: `import { forwardRef, useRef } from 'react';
+
+// Must wrap in forwardRef 😫
+const FancyInput = forwardRef(({ label, ...props }, ref) => {
+  return (
+    <div>
+      <label>{label}</label>
+      <input 
+        ref={ref} 
+        className="fancy-input"
+        {...props} 
+      />
+    </div>
+  );
+});
+
+// Usage
+const App = () => {
+  const inputRef = useRef(null);
+  
+  return (
+    <>
+      <FancyInput ref={inputRef} label="Email:" />
+      <button onClick={() => inputRef.current.focus()}>
+        Focus on Email!
+      </button>
+    </>
+  );
+};`,
       react18Problems: 'Problems:',
       react18ProblemsList: [
         'Extra boilerplate',
         'Complex TypeScript typing',
         'Less intuitive API',
       ],
-      react19Title: '✅ React 19',
+      react19Title: '✅ React 19 (ref as prop)',
+      react19Code: `import { useRef } from 'react';
+
+// Just a regular function! 🎉
+const FancyInput = ({ ref, label, ...props }) => {
+  return (
+    <div>
+      <label>{label}</label>
+      <input 
+        ref={ref} 
+        className="fancy-input"
+        {...props} 
+      />
+    </div>
+  );
+};
+
+// Usage - same!
+const App = () => {
+  const inputRef = useRef(null);
+  
+  return (
+    <>
+      <FancyInput ref={inputRef} label="Email:" />
+      <button onClick={() => inputRef.current.focus()}>
+        Focus on Email!
+      </button>
+    </>
+  );
+};`,
       react19BenefitsTitle: 'Benefits:',
       react19BenefitsList: [
         'Less code',
@@ -654,6 +784,41 @@ function SubmitButton() {
           description: 'Structured data (JSON-LD), analytics',
         },
       ],
+      realExamplesTitle: '🔥 Real examples:',
+      realExamples: {
+        blogPost: {
+          title: '1. Dynamic title for blog:',
+          code: `const BlogPost = ({ post }) => {
+  return (
+    <article>
+      <title>{post.title} - My Blog</title>
+      <meta name="description" content={post.excerpt} />
+      <meta property="og:title" content={post.title} />
+      
+      <h1>{post.title}</h1>
+      <p>{post.content}</p>
+    </article>
+  );
+};`,
+        },
+        product: {
+          title: '2. SEO for product:',
+          code: `const Product = ({ product }) => {
+  return (
+    <div>
+      <title>{product.name} - \${product.price}</title>
+      <meta name="description" content={product.description} />
+      <meta property="og:image" content={product.image} />
+      <meta property="og:price:amount" content={product.price} />
+      
+      <div className="product-card">
+        {/* Product content */}
+      </div>
+    </div>
+  );
+};`,
+        },
+      },
       usageExamplesTitle: '💡 Usage examples:',
       examples: {
         multilingual: {
@@ -802,6 +967,143 @@ function SubmitButton() {
       },
     },
     
+    compiler: {
+      title: 'React 19: React Compiler',
+      description: 'Automatic optimization without manual useMemo and useCallback! The compiler analyzes code and optimizes re-renders itself.',
+      before: 'Before:',
+      after: 'After:',
+      comparisonTitle: '⚖️ Comparison of approaches:',
+      react18Title: '❌ React 18 (manual memoization)',
+      react18Code: `const ExpensiveList = ({ items, filter }) => {
+  // Manual memoization 😫
+  const filtered = useMemo(() => 
+    items.filter(item => item.includes(filter)),
+    [items, filter]
+  );
+  
+  const handleClick = useCallback((id) => {
+    console.log(id);
+  }, []);
+  
+  return filtered.map(item => (
+    <div onClick={() => handleClick(item.id)}>
+      {item.name}
+    </div>
+  ));
+};`,
+      react19Title: '✅ React 19 (automatic optimization)',
+      react19Code: `const ExpensiveList = ({ items, filter }) => {
+  // Compiler optimizes automatically! 🎉
+  const filtered = items.filter(item => 
+    item.includes(filter)
+  );
+  
+  const handleClick = (id) => {
+    console.log(id);
+  };
+  
+  return filtered.map(item => (
+    <div onClick={() => handleClick(item.id)}>
+      {item.name}
+    </div>
+  ));
+};`,
+      whatIsCompiler: '🤖 What is React Compiler?',
+      compilerDescription: 'React Compiler is a build-time tool that automatically optimizes your React code. It analyzes components and adds optimizations that you used to write manually with useMemo, useCallback, and React.memo.',
+      howItWorksTitle: '🔄 How it works:',
+      howItWorks: [
+        'Analyzes your code during build',
+        'Finds expensive calculations and function creations',
+        'Automatically adds memoization where needed',
+        'Optimizes re-renders without changing your code',
+      ],
+      benefitsTitle: '💡 Benefits:',
+      benefits: [
+        'No need for manual useMemo/useCallback',
+        'Less boilerplate code',
+        'Fewer bugs (forgot to add dependency)',
+        'Better performance automatically',
+        'Easier to maintain code',
+      ],
+      realExamplesTitle: '🔥 Real examples:',
+      realExamples: {
+        expensiveCalculation: {
+          title: '1. Expensive calculation:',
+          before: `// Before: Manual memoization
+const Component = ({ data }) => {
+  const result = useMemo(() => {
+    return data.map(x => x * 2)
+      .filter(x => x > 10)
+      .reduce((a, b) => a + b);
+  }, [data]);
+  
+  return <div>{result}</div>;
+};`,
+          after: `// After: Compiler does it
+const Component = ({ data }) => {
+  const result = data.map(x => x * 2)
+    .filter(x => x > 10)
+    .reduce((a, b) => a + b);
+  
+  return <div>{result}</div>;
+};`,
+        },
+        eventHandlers: {
+          title: '2. Event handlers:',
+          before: `// Before: useCallback everywhere
+const List = ({ items, onSelect }) => {
+  const handleClick = useCallback((id) => {
+    onSelect(id);
+  }, [onSelect]);
+  
+  return items.map(item => (
+    <Item onClick={() => handleClick(item.id)} />
+  ));
+};`,
+          after: `// After: Just write code
+const List = ({ items, onSelect }) => {
+  const handleClick = (id) => {
+    onSelect(id);
+  };
+  
+  return items.map(item => (
+    <Item onClick={() => handleClick(item.id)} />
+  ));
+};`,
+        },
+      },
+      howToEnableTitle: '⚙️ How to enable:',
+      howToEnable: {
+        step1: '1. Install:',
+        step1Code: 'npm install babel-plugin-react-compiler',
+        step2: '2. Configure babel/vite:',
+        step2Code: `// vite.config.js
+export default {
+  plugins: [
+    react({
+      babel: {
+        plugins: [
+          ['babel-plugin-react-compiler', {}]
+        ]
+      }
+    })
+  ]
+}`,
+        step3: '3. That\'s it! Compiler works automatically',
+      },
+      importantTitle: 'Important:',
+      importantNotes: [
+        '<strong>Experimental:</strong> Compiler is still in beta, test thoroughly',
+        '<strong>Build-time optimization:</strong> works during build, not at runtime',
+        '<strong>Doesn\'t break old code:</strong> useMemo/useCallback still work',
+        '<strong>Not for everything:</strong> some complex cases may need manual optimization',
+        '<strong>Best for new projects:</strong> or gradual migration',
+        '<strong>Doesn\'t replace your understanding:</strong> you still need to know how renders work',
+        '<strong>Not magic:</strong> you need to write correct React code',
+        '<strong>Test thoroughly:</strong> don\'t just blindly delete all useMemo',
+      ],
+    },
+    
     language: {
       label: 'Language',
       en: 'English',
@@ -822,6 +1124,7 @@ const translationsUk = {
       ref: 'ref як пропс',
       metadata: 'Метадані',
       finalFormComparison: 'Порівняння форм',
+      compiler: 'React Compiler',
     },
     
     home: {
@@ -857,7 +1160,6 @@ const translationsUk = {
         step2: 'Читайте пояснення та порівняння з React 18',
         step3: 'Взаємодійте з інтерактивними прикладами',
         step4: 'Дивіться в консоль - там багато логів для розуміння',
-        step5: 'Читайте код - він добре прокоментований',
       },
       reasons: {
         lessBoilerplate: {
@@ -925,6 +1227,7 @@ const translationsUk = {
     actions: {
       title: 'React 19: Екшени',
       description: 'Екшени - новий спосіб роботи з асинхронними операціями у формах. Більше не потрібно вручну керувати станами завантаження/помилок!',
+      comparisonTitle: '⚖️ Порівняння підходів:',
       react18Title: '❌ React 18',
       react19Title: '✅ React 19',
       benefits: 'Переваги:',
@@ -933,6 +1236,76 @@ const translationsUk = {
         'Автоматична обробка помилок',
         'Простіший код',
         'Працює з FormData за замовчуванням',
+      ],
+      realExamplesTitle: '🔥 Реальні приклади:',
+      realExamples: {
+        loginForm: {
+          title: '1. Проста форма логіну:',
+          code: `const LoginForm = () => {
+  const [state, loginAction] = useActionState(
+    async (prev, formData) => {
+      const email = formData.get('email');
+      const password = formData.get('password');
+      
+      const response = await login(email, password);
+      return { success: true, user: response };
+    },
+    { success: false }
+  );
+
+  return (
+    <form action={loginAction}>
+      <input name="email" type="email" required />
+      <input name="password" type="password" required />
+      <button type="submit">Увійти</button>
+    </form>
+  );
+};`,
+        },
+        fileUpload: {
+          title: '2. Форма з завантаженням файлу:',
+          code: `const UploadForm = () => {
+  const [state, uploadAction, isPending] = useActionState(
+    async (prev, formData) => {
+      const file = formData.get('file');
+      
+      await uploadFile(file);
+      return { success: true, fileName: file.name };
+    },
+    { success: false }
+  );
+
+  return (
+    <form action={uploadAction}>
+      <input name="file" type="file" required />
+      <button disabled={isPending}>
+        {isPending ? 'Завантаження...' : 'Завантажити'}
+      </button>
+      {state.success && <p>✅ {state.fileName} завантажено!</p>}
+    </form>
+  );
+};`,
+        },
+      },
+      apiSectionTitle: '📖 useActionState API:',
+      apiTable: {
+        returns: 'Повертає',
+        parameter: 'Параметр',
+        type: 'Тип',
+        description: 'Опис',
+        state: 'Поточний стан (результат останньої дії)',
+        action: 'Функція для передачі в атрибут action форми',
+        isPending: 'Булеве значення, чи виконується дія',
+        actionParam: 'Async функція, що отримує (prevState, formData)',
+        initialState: 'Початкове значення стану',
+      },
+      importantTitle: 'Важливо:',
+      importantNotes: [
+        '<strong>Actions автоматично керують pending станом:</strong> не потрібен ручний useState для loading',
+        '<strong>Працюють з FormData за замовчуванням:</strong> легкий доступ до всіх полів форми',
+        '<strong>Потребують React 19:</strong> недоступні в попередніх версіях',
+        '<strong>Сумісні з SSR/RSC:</strong> працюють з Server Components out of the box',
+        '<strong>Автоматичні error boundaries:</strong> помилки перехоплюються і можуть оброблятись у стані',
       ],
       example: 'Приклад:',
       form: {
@@ -1161,7 +1534,8 @@ const data = isLoading
     formStatus: {
       title: 'React 19: useFormStatus',
       whatsNew: 'Що нового?',
-      description: 'Будь-який дочірній компонент може отримати статус форми без передачі пропсів! Особливо корисно для переісвикористовуваних UI компонентів.',
+      description: 'Будь-який дочірній компонент може отримати статус форми без передачі пропсів! Особливо корисно для багаторазово використовуваних UI компонентів.',
+      comparisonTitle: '⚖️ Порівняння підходів:',
       problemSection: {
         title: '😰 Проблема в React 18:',
         text: 'Щоб кнопка знала статус форми, потрібно було передавати <code>isLoading</code> через пропси:',
@@ -1305,14 +1679,72 @@ function SubmitButton() {
       whatsNew: 'Що нового?',
       description: 'В React 19 ref можна використовувати як звичайний пропс без обгортки forwardRef',
       comparisonTitle: '⚖️ Порівняння підходів:',
-      react18Title: '❌ React 18',
+      react18Title: '❌ React 18 (з forwardRef)',
+      react18Code: `import { forwardRef, useRef } from 'react';
+
+// Треба обгортати в forwardRef 😫
+const FancyInput = forwardRef(({ label, ...props }, ref) => {
+  return (
+    <div>
+      <label>{label}</label>
+      <input 
+        ref={ref} 
+        className="fancy-input"
+        {...props} 
+      />
+    </div>
+  );
+});
+
+// Використання
+const App = () => {
+  const inputRef = useRef(null);
+  
+  return (
+    <>
+      <FancyInput ref={inputRef} label="Email:" />
+      <button onClick={() => inputRef.current.focus()}>
+        Фокус на Email!
+      </button>
+    </>
+  );
+};`,
       react18Problems: 'Проблеми:',
       react18ProblemsList: [
         'Додатковий boilerplate',
         'Складна типізація TypeScript',
         'Менш інтуїтивний API',
       ],
-      react19Title: '✅ React 19',
+      react19Title: '✅ React 19 (ref як пропс)',
+      react19Code: `import { useRef } from 'react';
+
+// Просто звичайна функція! 🎉
+const FancyInput = ({ ref, label, ...props }) => {
+  return (
+    <div>
+      <label>{label}</label>
+      <input 
+        ref={ref} 
+        className="fancy-input"
+        {...props} 
+      />
+    </div>
+  );
+};
+
+// Використання - точно так само!
+const App = () => {
+  const inputRef = useRef(null);
+  
+  return (
+    <>
+      <FancyInput ref={inputRef} label="Email:" />
+      <button onClick={() => inputRef.current.focus()}>
+        Фокус на Email!
+      </button>
+    </>
+  );
+};`,
       react19BenefitsTitle: 'Переваги:',
       react19BenefitsList: [
         'Менше коду',
@@ -1464,6 +1896,41 @@ function SubmitButton() {
           description: 'Структуровані дані (JSON-LD), аналітика',
         },
       ],
+      realExamplesTitle: '🔥 Реальні приклади:',
+      realExamples: {
+        blogPost: {
+          title: '1. Динамічний заголовок для блогу:',
+          code: `const BlogPost = ({ post }) => {
+  return (
+    <article>
+      <title>{post.title} - Мій Блог</title>
+      <meta name="description" content={post.excerpt} />
+      <meta property="og:title" content={post.title} />
+      
+      <h1>{post.title}</h1>
+      <p>{post.content}</p>
+    </article>
+  );
+};`,
+        },
+        product: {
+          title: '2. SEO для товару:',
+          code: `const Product = ({ product }) => {
+  return (
+    <div>
+      <title>{product.name} - \${product.price}</title>
+      <meta name="description" content={product.description} />
+      <meta property="og:image" content={product.image} />
+      <meta property="og:price:amount" content={product.price} />
+      
+      <div className="product-card">
+        {/* Контент товару */}
+      </div>
+    </div>
+  );
+};`,
+        },
+      },
       usageExamplesTitle: '💡 Приклади використання:',
       examples: {
         multilingual: {
@@ -1560,7 +2027,7 @@ function SubmitButton() {
           },
           {
             title: 'Створіть обгортки',
-            description: 'Напишіть переісвикористовувані компоненти для валідації та обробки помилок',
+            description: 'Напишіть перевикористовувані компоненти для валідації та обробки помилок',
           },
           {
             title: 'Не поспішайте',
@@ -1610,6 +2077,143 @@ function SubmitButton() {
         emailInvalid: 'Невалідний email',
         error: 'Помилка',
       },
+    },
+    
+    compiler: {
+      title: 'React 19: React Compiler',
+      description: 'Автоматична оптимізація без ручних useMemo та useCallback! Компілятор аналізує код і сам оптимізує рендери.',
+      before: 'До:',
+      after: 'Після:',
+      comparisonTitle: '⚖️ Порівняння підходів:',
+      react18Title: '❌ React 18 (ручна мемоїзація)',
+      react18Code: `const ExpensiveList = ({ items, filter }) => {
+  // Ручна мемоїзація 😫
+  const filtered = useMemo(() => 
+    items.filter(item => item.includes(filter)),
+    [items, filter]
+  );
+  
+  const handleClick = useCallback((id) => {
+    console.log(id);
+  }, []);
+  
+  return filtered.map(item => (
+    <div onClick={() => handleClick(item.id)}>
+      {item.name}
+    </div>
+  ));
+};`,
+      react19Title: '✅ React 19 (автоматична оптимізація)',
+      react19Code: `const ExpensiveList = ({ items, filter }) => {
+  // Компілятор оптимізує автоматично! 🎉
+  const filtered = items.filter(item => 
+    item.includes(filter)
+  );
+  
+  const handleClick = (id) => {
+    console.log(id);
+  };
+  
+  return filtered.map(item => (
+    <div onClick={() => handleClick(item.id)}>
+      {item.name}
+    </div>
+  ));
+};`,
+      whatIsCompiler: '🤖 Що таке React Compiler?',
+      compilerDescription: 'React Compiler - це інструмент збірки, який автоматично оптимізує ваш React код. Він аналізує компоненти і додає оптимізації, які ви раніше писали вручну через useMemo, useCallback і React.memo.',
+      howItWorksTitle: '🔄 Як це працює:',
+      howItWorks: [
+        'Аналізує ваш код під час збірки',
+        'Знаходить дорогі обчислення та створення функцій',
+        'Автоматично додає мемоїзацію де потрібно',
+        'Оптимізує ре-рендери не змінюючи ваш код',
+      ],
+      benefitsTitle: '💡 Переваги:',
+      benefits: [
+        'Не потрібні ручні useMemo/useCallback',
+        'Менше бойлерплейт коду',
+        'Менше багів (забули додати залежність)',
+        'Краща продуктивність автоматично',
+        'Легше підтримувати код',
+      ],
+      realExamplesTitle: '🔥 Реальні приклади:',
+      realExamples: {
+        expensiveCalculation: {
+          title: '1. Дороге обчислення:',
+          before: `// До: Ручна мемоїзація
+const Component = ({ data }) => {
+  const result = useMemo(() => {
+    return data.map(x => x * 2)
+      .filter(x => x > 10)
+      .reduce((a, b) => a + b);
+  }, [data]);
+  
+  return <div>{result}</div>;
+};`,
+          after: `// Після: Компілятор робить це
+const Component = ({ data }) => {
+  const result = data.map(x => x * 2)
+    .filter(x => x > 10)
+    .reduce((a, b) => a + b);
+  
+  return <div>{result}</div>;
+};`,
+        },
+        eventHandlers: {
+          title: '2. Обробники подій:',
+          before: `// До: useCallback скрізь
+const List = ({ items, onSelect }) => {
+  const handleClick = useCallback((id) => {
+    onSelect(id);
+  }, [onSelect]);
+  
+  return items.map(item => (
+    <Item onClick={() => handleClick(item.id)} />
+  ));
+};`,
+          after: `// Після: Просто пишіть код
+const List = ({ items, onSelect }) => {
+  const handleClick = (id) => {
+    onSelect(id);
+  };
+  
+  return items.map(item => (
+    <Item onClick={() => handleClick(item.id)} />
+  ));
+};`,
+        },
+      },
+      howToEnableTitle: '⚙️ Як увімкнути:',
+      howToEnable: {
+        step1: '1. Встановити:',
+        step1Code: 'npm install babel-plugin-react-compiler',
+        step2: '2. Налаштувати babel/vite:',
+        step2Code: `// vite.config.js
+export default {
+  plugins: [
+    react({
+      babel: {
+        plugins: [
+          ['babel-plugin-react-compiler', {}]
+        ]
+      }
+    })
+  ]
+}`,
+        step3: '3. Все! Компілятор працює автоматично',
+      },
+      importantTitle: 'Важливо:',
+      importantNotes: [
+        '<strong>Експериментально:</strong> Компілятор все ще в бета-версії, тестуйте ретельно',
+        '<strong>Оптимізація під час збірки:</strong> працює при збірці, а не в рантаймі',
+        '<strong>Не ламає старий код:</strong> useMemo/useCallback все ще працюють',
+        '<strong>Не для всього:</strong> деякі складні випадки можуть потребувати ручної оптимізації',
+        '<strong>Краще для нових проектів:</strong> або поступової міграції',
+        '<strong>Не замінює твоє розуміння:</strong> треба знати як працюють рендери',
+        '<strong>Не магія:</strong> треба писати правильний React код',
+        '<strong>Треба тестувати:</strong> не просто видали всі useMemo сліпо',
+      ],
     },
     
     language: {

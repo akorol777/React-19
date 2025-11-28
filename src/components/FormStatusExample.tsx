@@ -144,26 +144,31 @@ export const FormStatusExample = () => {
         <strong>{t.formStatus.whatsNew}</strong> {t.formStatus.description}
       </p>
 
-      {/* Problem explanation in React 18 */}
-      <div className={styles.problemSection}>
-        <h3 className={styles.sectionTitle}>{t.formStatus.problemSection.title}</h3>
-        <p className={styles.problemText} dangerouslySetInnerHTML={{ __html: t.formStatus.problemSection.text }}>
-        </p>
-        <pre className={styles.code}>{`// React 18: passing through props
+      {/* Comparison: Problem vs Solution */}
+      <div className={styles.comparison}>
+        <h3 className={styles.sectionTitle}>{t.formStatus.comparisonTitle}</h3>
+        
+        <div className={styles.comparisonGrid}>
+          {/* Problem in React 18 */}
+          <div className={styles.comparisonItem}>
+            <h4 className={styles.comparisonTitle}>{t.formStatus.problemSection.title}</h4>
+            <p className={styles.problemText} dangerouslySetInnerHTML={{ __html: t.formStatus.problemSection.text }}>
+            </p>
+            <pre className={styles.code}>{`// React 18: passing through props
 const [loading, setLoading] = useState(false);
 
 <form onSubmit={handleSubmit}>
   <input />
   <SubmitButton loading={loading} /> {/* 😢 */}
 </form>`}</pre>
-      </div>
+          </div>
 
-      {/* Solution in React 19 */}
-      <div className={styles.solutionSection}>
-        <h3 className={styles.sectionTitle}>{t.formStatus.solutionSection.title}</h3>
-        <p className={styles.solutionText} dangerouslySetInnerHTML={{ __html: t.formStatus.solutionSection.text }}>
-        </p>
-        <pre className={styles.code}>{`// React 19: useFormStatus knows everything!
+          {/* Solution in React 19 */}
+          <div className={styles.comparisonItem}>
+            <h4 className={styles.comparisonTitle}>{t.formStatus.solutionSection.title}</h4>
+            <p className={styles.solutionText} dangerouslySetInnerHTML={{ __html: t.formStatus.solutionSection.text }}>
+            </p>
+            <pre className={styles.code}>{`// React 19: useFormStatus knows everything!
 function SubmitButton() {
   const { pending } = useFormStatus();
   return (
@@ -172,6 +177,8 @@ function SubmitButton() {
     </button>
   );
 }`}</pre>
+          </div>
+        </div>
       </div>
 
       {/* Demo form */}

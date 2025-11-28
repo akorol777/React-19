@@ -178,9 +178,6 @@ export const HomePage = () => {
           <li className={styles.instruction}>
             {t.home.instructions.step4}
           </li>
-          <li className={styles.instruction}>
-            {t.home.instructions.step5}
-          </li>
         </ol>
       </div>
 

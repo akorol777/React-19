@@ -9,6 +9,7 @@ import { FormStatusExample } from './components/FormStatusExample';
 import { RefExample } from './components/RefExample';
 import { MetadataExample } from './components/MetadataExample';
 import { FinalFormComparison } from './components/FinalFormComparison';
+import { CompilerExample } from './components/CompilerExample';
 import styles from './App.module.scss';
 
 // Component that renders the appropriate example based on current view
@@ -38,6 +39,8 @@ const MainContent = () => {
         return <MetadataExample />;
       case 'final-form':
         return <FinalFormComparison />;
+      case 'compiler':
+        return <CompilerExample />;
       default:
         return <HomePage />;
     }

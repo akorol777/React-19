@@ -25,6 +25,7 @@ export const Navigation = () => {
     { id: 'form-status', title: `📊 ${t.nav.formStatus}`, icon: '📊' },
     { id: 'ref', title: `🎯 ${t.nav.ref}`, icon: '🎯' },
     { id: 'metadata', title: `📄 ${t.nav.metadata}`, icon: '📄' },
+    { id: 'compiler', title: `🤖 ${t.nav.compiler}`, icon: '🤖' },
     { id: 'final-form', title: `📋 ${t.nav.finalFormComparison}`, icon: '📋' },
   ];
 

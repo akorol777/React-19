@@ -122,18 +122,7 @@ export const RefExample = () => {
         <div className={styles.comparisonGrid}>
           <div className={styles.comparisonCard}>
             <h4 className={styles.comparisonTitle}>{t.ref.react18Title}</h4>
-            <pre className={styles.code}>{`import { forwardRef } from 'react';
-
-// forwardRef needed! 😢
-const Input = forwardRef<
-  HTMLInputElement, 
-  Props
->((props, ref) => {
-  return <input ref={ref} {...props} />;
-});
-
-// Usage
-<Input ref={myRef} />`}</pre>
+            <pre className={styles.code}>{t.ref.react18Code}</pre>
             <div className={styles.comparisonNote}>
               <strong>{t.ref.react18Problems}</strong>
               <ul className={styles.comparisonList}>
@@ -146,16 +135,7 @@ const Input = forwardRef<
 
           <div className={styles.comparisonCard}>
             <h4 className={styles.comparisonTitle}>{t.ref.react19Title}</h4>
-            <pre className={styles.code}>{`// Just pass ref as prop! 🎉
-const Input = ({ ref, ...props }: {
-  ref?: Ref<HTMLInputElement>;
-  [key: string]: any;
-}) => {
-  return <input ref={ref} {...props} />;
-};
-
-// Usage - same!
-<Input ref={myRef} />`}</pre>
+            <pre className={styles.code}>{t.ref.react19Code}</pre>
             <div className={styles.comparisonNote}>
               <strong>{t.ref.react19BenefitsTitle}</strong>
               <ul className={styles.comparisonList}>
