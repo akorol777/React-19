@@ -1,63 +1,12 @@
-import { use, Suspense, useState } from 'react';
-import type { User, Post } from '../data/mockData';
-import { fetchUser, fetchPosts } from '../data/mockData';
+import { use } from 'react';
 import { LanguageContext } from '../contexts/LanguageContext';
 import styles from './Examples.module.scss';
-
-// Component that uses use() to unwrap promise
-const UserProfile = ({ userPromise }: { userPromise: Promise<User> }) => {
-  // React 19: use() hook - unwraps promise!
-  // Can be used even conditionally (unlike useEffect)
-  const user = use(userPromise);
-  
-  console.log('👤 User loaded in component:', user);
-
-  return (
-    <div className={styles.profileCard}>
-      <div className={styles.avatar}>{user.avatar}</div>
-      <div>
-        <h3 className={styles.userName}>{user.name}</h3>
-        <p className={styles.userEmail}>{user.email}</p>
-      </div>
-    </div>
-  );
-};
-
-// Component that uses use() for posts
-const PostsList = ({ postsPromise }: { postsPromise: Promise<Post[]> }) => {
-  // React 19: use() unwraps promise with posts array
-  const posts = use(postsPromise);
-  
-  console.log(`📚 Posts loaded in component: ${posts.length} items`);
-
-  return (
-    <div className={styles.postsList}>
-      {posts.map(post => (
-        <div key={post.id} className={styles.postCard}>
-          <h4 className={styles.postTitle}>{post.title}</h4>
-          <p className={styles.postContent}>{post.content}</p>
-          <div className={styles.postMeta}>
-            <span>✍️ {post.author}</span>
-            <span>❤️ {post.likes}</span>
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-};
 
 // Main component
 export const UseHookExample = () => {
   const langContext = use(LanguageContext);
   if (!langContext) throw new Error('LanguageContext not found');
   const { t } = langContext;
-
-  const [userId, setUserId] = useState<number>(1);
-  const [loadData, setLoadData] = useState<boolean>(false);
-
-  // Create promises (they start immediately)
-  const userPromise = loadData ? fetchUser(userId) : null;
-  const postsPromise = loadData ? fetchPosts() : null;
 
   return (
     <div className={styles.container}>
@@ -95,63 +44,6 @@ export const UseHookExample = () => {
             </ul>
           </div>
         </div>
-      </div>
-
-      {/* Example 1: Unwrapping promises */}
-      <div className={styles.section}>
-        <h3 className={styles.sectionTitle}>1️⃣ {t.useHook.promiseUnwrapTitle}</h3>
-
-        <div className={styles.controls}>
-          <label className={styles.label}>
-            {t.useHook.selectUser}
-            <select
-              value={userId}
-              onChange={(e) => setUserId(Number(e.target.value))}
-              className={styles.select}
-              disabled={loadData}
-            >
-              <option value={1}>Andrii King</option>
-              <option value={2}>Peter Paver</option>
-              <option value={3}>Pavel Peter</option>
-            </select>
-          </label>
-
-          <button
-            onClick={() => setLoadData(!loadData)}
-            className={`${styles.button} ${loadData ? styles.buttonDanger : ''}`}
-          >
-            {loadData
-              ? `🛑 ${t.useHook.loadingButton}`
-              : `🚀 ${t.useHook.loadDataButton}`}
-          </button>
-        </div>
-
-        {loadData && userPromise && postsPromise ? (
-          // Suspense waits until use() unwraps promises
-          <Suspense
-            fallback={<LoadingSpinner message={t.useHook.loading} />}
-          >
-            <div className={styles.dataContainer}>
-              <div>
-                <h4 className={styles.subsectionTitle}>
-                  👤 {t.useHook.userProfileTitle}
-                </h4>
-                <UserProfile userPromise={userPromise} />
-              </div>
-
-              <div>
-                <h4 className={styles.subsectionTitle}>
-                  📚 {t.useHook.postsTitle}
-                </h4>
-                <PostsList postsPromise={postsPromise} />
-              </div>
-            </div>
-          </Suspense>
-        ) : (
-          <div className={styles.placeholder}>
-            {t.useHook.clickToLoadMessage}
-          </div>
-        )}
       </div>
 
       {/* Comparison with React 18 */}
@@ -194,11 +86,3 @@ export const UseHookExample = () => {
     </div>
   );
 };
-
-// Loading component
-const LoadingSpinner = ({ message }: { message: string }) => (
-  <div className={styles.loading}>
-    <div className={styles.spinner}>⏳</div>
-    <p>{message}</p>
-  </div>
-);
