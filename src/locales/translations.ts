@@ -13,6 +13,7 @@ const translationsEn = {
       metadata: 'Metadata',
       finalFormComparison: 'Forms Comparison',
       compiler: 'React Compiler',
+      breakingChanges: 'Breaking Changes',
     },
     
   home: {
@@ -1149,6 +1150,161 @@ export default {
       en: 'English',
       uk: 'Українська',
     },
+    
+    breakingChanges: {
+      title: 'React 19: Breaking Changes',
+      description: 'Important changes that may require code modifications when upgrading to React 19. Plan your migration carefully!',
+      comparisonTitle: 'Before / After:',
+      before: '❌ Before (React 18)',
+      after: '✅ After (React 19)',
+      
+      change1Title: '🔴 Removed: defaultProps',
+      change1Description: 'defaultProps for function components are no longer supported. Use ES6 default parameters instead.',
+      change1Before: `const Button = ({ color, size }) => {
+  return <button className={\`btn-\${color} btn-\${size}\`}>
+    Click me
+  </button>;
+};
+
+// ❌ No longer works!
+Button.defaultProps = {
+  color: 'blue',
+  size: 'medium'
+};`,
+      change1After: `// ✅ Use default parameters
+const Button = ({ 
+  color = 'blue', 
+  size = 'medium' 
+}) => {
+  return <button className={\`btn-\${color} btn-\${size}\`}>
+    Click me
+  </button>;
+};`,
+      
+      change2Title: '🔴 Removed: propTypes',
+      change2Description: 'Runtime prop validation via propTypes is removed. Migrate to TypeScript for type safety.',
+      change2Before: `import PropTypes from 'prop-types';
+
+const User = ({ name, age, email }) => {
+  return <div>{name} ({age})</div>;
+};
+
+// ❌ No longer works!
+User.propTypes = {
+  name: PropTypes.string.isRequired,
+  age: PropTypes.number,
+  email: PropTypes.string
+};`,
+      change2After: `// ✅ Use TypeScript
+interface UserProps {
+  name: string;
+  age?: number;
+  email?: string;
+}
+
+const User = ({ name, age, email }: UserProps) => {
+  return <div>{name} ({age})</div>;
+};`,
+      
+      change3Title: '🟡 Changed: Context.Provider → Context',
+      change3Description: 'Context.Provider is replaced with just Context. Simpler syntax!',
+      change3Before: `import { createContext } from 'react';
+
+const ThemeContext = createContext('light');
+
+// ❌ Old syntax
+const App = () => {
+  return (
+    <ThemeContext.Provider value="dark">
+      <Child />
+    </ThemeContext.Provider>
+  );
+};`,
+      change3After: `import { createContext } from 'react';
+
+const ThemeContext = createContext('light');
+
+// ✅ New syntax - just Context!
+const App = () => {
+  return (
+    <ThemeContext value="dark">
+      <Child />
+    </ThemeContext>
+  );
+};`,
+      
+      change4Title: '⚠️ Stricter: ref handling',
+      change4Description: 'Callback refs must now return a cleanup function or undefined. This prevents memory leaks.',
+      change4Before: `// ❌ May cause issues
+const Component = () => {
+  const ref = useCallback((node) => {
+    if (node) {
+      // Setup
+      node.addEventListener('click', handler);
+    }
+    // No cleanup!
+  }, []);
+  
+  return <div ref={ref} />;
+};`,
+      change4After: `// ✅ Return cleanup function
+const Component = () => {
+  const ref = useCallback((node) => {
+    if (node) {
+      // Setup
+      node.addEventListener('click', handler);
+      
+      // Return cleanup!
+      return () => {
+        node.removeEventListener('click', handler);
+      };
+    }
+  }, []);
+  
+  return <div ref={ref} />;
+};`,
+      
+      migrationTitle: '🚀 Migration Guide',
+      migrationSteps: [
+        {
+          title: 'Replace defaultProps',
+          description: 'Convert to ES6 default parameters in function signatures',
+        },
+        {
+          title: 'Migrate propTypes to TypeScript',
+          description: 'Add interfaces/types for component props',
+        },
+        {
+          title: 'Update Context.Provider',
+          description: 'Simple find & replace: .Provider → just remove it',
+        },
+        {
+          title: 'Review ref callbacks',
+          description: 'Ensure all callback refs return cleanup functions',
+        },
+      ],
+      
+      complexityTitle: '📊 Migration Complexity',
+      complexityTable: {
+        change: 'Change',
+        difficulty: 'Difficulty',
+        automation: 'Automation',
+        rows: [
+          { change: 'defaultProps', difficulty: '🟢 Easy', automation: '✅ Find & replace' },
+          { change: 'propTypes', difficulty: '🟡 Medium', automation: '⚠️ Manual if no TS' },
+          { change: 'Context.Provider', difficulty: '🟢 Easy', automation: '✅ Find & replace' },
+          { change: 'ref callbacks', difficulty: '🟡 Medium', automation: '❌ Manual review' },
+        ],
+      },
+      
+      importantTitle: 'Important:',
+      importantNotes: [
+        '<strong>Test thoroughly:</strong> run your test suite after each migration step',
+        '<strong>TypeScript helps:</strong> if you\'re not using it, now is a good time to start',
+        '<strong>Gradual migration:</strong> you can update incrementally, not all at once',
+        '<strong>Check console warnings:</strong> React 19 will warn about deprecated patterns',
+      ],
+    },
 };
 
 // Автоматично виводимо тип з англійської версії (без as const для гнучкості)
@@ -1165,6 +1321,7 @@ const translationsUk = {
       metadata: 'Метадані',
       finalFormComparison: 'Порівняння форм',
       compiler: 'React Compiler',
+      breakingChanges: 'Breaking Changes',
     },
     
     home: {
@@ -2300,6 +2457,161 @@ export default {
       label: 'Мова',
       en: 'English',
       uk: 'Українська',
+    },
+    
+    breakingChanges: {
+      title: 'React 19: Breaking Changes',
+      description: 'Важливі зміни, які можуть потребувати модифікації коду при оновленні до React 19. Плануйте міграцію уважно!',
+      comparisonTitle: 'До / Після:',
+      before: '❌ До (React 18)',
+      after: '✅ Після (React 19)',
+      
+      change1Title: '🔴 Видалено: defaultProps',
+      change1Description: 'defaultProps для функціональних компонентів більше не підтримуються. Використовуйте ES6 параметри за замовчуванням.',
+      change1Before: `const Button = ({ color, size }) => {
+  return <button className={\`btn-\${color} btn-\${size}\`}>
+    Натисни мене
+  </button>;
+};
+
+// ❌ Більше не працює!
+Button.defaultProps = {
+  color: 'blue',
+  size: 'medium'
+};`,
+      change1After: `// ✅ Використовуйте параметри за замовчуванням
+const Button = ({ 
+  color = 'blue', 
+  size = 'medium' 
+}) => {
+  return <button className={\`btn-\${color} btn-\${size}\`}>
+    Натисни мене
+  </button>;
+};`,
+      
+      change2Title: '🔴 Видалено: propTypes',
+      change2Description: 'Runtime валідація пропсів через propTypes видалена. Мігруйте на TypeScript для типобезпеки.',
+      change2Before: `import PropTypes from 'prop-types';
+
+const User = ({ name, age, email }) => {
+  return <div>{name} ({age})</div>;
+};
+
+// ❌ Більше не працює!
+User.propTypes = {
+  name: PropTypes.string.isRequired,
+  age: PropTypes.number,
+  email: PropTypes.string
+};`,
+      change2After: `// ✅ Використовуйте TypeScript
+interface UserProps {
+  name: string;
+  age?: number;
+  email?: string;
+}
+
+const User = ({ name, age, email }: UserProps) => {
+  return <div>{name} ({age})</div>;
+};`,
+      
+      change3Title: '🟡 Змінено: Context.Provider → Context',
+      change3Description: 'Context.Provider замінено на просто Context. Простіший синтаксис!',
+      change3Before: `import { createContext } from 'react';
+
+const ThemeContext = createContext('light');
+
+// ❌ Старий синтаксис
+const App = () => {
+  return (
+    <ThemeContext.Provider value="dark">
+      <Child />
+    </ThemeContext.Provider>
+  );
+};`,
+      change3After: `import { createContext } from 'react';
+
+const ThemeContext = createContext('light');
+
+// ✅ Новий синтаксис - просто Context!
+const App = () => {
+  return (
+    <ThemeContext value="dark">
+      <Child />
+    </ThemeContext>
+  );
+};`,
+      
+      change4Title: '⚠️ Суворіше: обробка ref',
+      change4Description: 'Callback ref тепер мають повертати функцію очищення або undefined. Це запобігає витокам пам\'яті.',
+      change4Before: `// ❌ Може спричинити проблеми
+const Component = () => {
+  const ref = useCallback((node) => {
+    if (node) {
+      // Налаштування
+      node.addEventListener('click', handler);
+    }
+    // Немає очищення!
+  }, []);
+  
+  return <div ref={ref} />;
+};`,
+      change4After: `// ✅ Повертайте функцію очищення
+const Component = () => {
+  const ref = useCallback((node) => {
+    if (node) {
+      // Налаштування
+      node.addEventListener('click', handler);
+      
+      // Повертаємо очищення!
+      return () => {
+        node.removeEventListener('click', handler);
+      };
+    }
+  }, []);
+  
+  return <div ref={ref} />;
+};`,
+      
+      migrationTitle: '🚀 Гайд з міграції',
+      migrationSteps: [
+        {
+          title: 'Замініть defaultProps',
+          description: 'Конвертуйте в ES6 параметри за замовчуванням у сигнатурі функції',
+        },
+        {
+          title: 'Мігруйте propTypes на TypeScript',
+          description: 'Додайте інтерфейси/типи для пропсів компонентів',
+        },
+        {
+          title: 'Оновіть Context.Provider',
+          description: 'Простий пошук і заміна: .Provider → просто видаліть',
+        },
+        {
+          title: 'Перегляньте ref callbacks',
+          description: 'Переконайтесь, що всі callback ref повертають функції очищення',
+        },
+      ],
+      
+      complexityTitle: '📊 Складність міграції',
+      complexityTable: {
+        change: 'Зміна',
+        difficulty: 'Складність',
+        automation: 'Автоматизація',
+        rows: [
+          { change: 'defaultProps', difficulty: '🟢 Легко', automation: '✅ Пошук і заміна' },
+          { change: 'propTypes', difficulty: '🟡 Середньо', automation: '⚠️ Вручну без TS' },
+          { change: 'Context.Provider', difficulty: '🟢 Легко', automation: '✅ Пошук і заміна' },
+          { change: 'ref callbacks', difficulty: '🟡 Середньо', automation: '❌ Ручний перегляд' },
+        ],
+      },
+      
+      importantTitle: 'Важливо:',
+      importantNotes: [
+        '<strong>Тестуйте ретельно:</strong> запускайте тести після кожного кроку міграції',
+        '<strong>TypeScript допомагає:</strong> якщо ви його не використовуєте, зараз гарний час почати',
+        '<strong>Поступова міграція:</strong> можна оновлювати інкрементально, не все одразу',
+        '<strong>Перевіряйте консоль:</strong> React 19 попереджає про застарілі патерни',
+      ],
     },
 };
 

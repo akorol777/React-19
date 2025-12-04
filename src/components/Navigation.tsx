@@ -27,6 +27,7 @@ export const Navigation = () => {
     { id: 'metadata', title: `📄 ${t.nav.metadata}`, icon: '📄' },
     { id: 'compiler', title: `🤖 ${t.nav.compiler}`, icon: '🤖' },
     { id: 'final-form', title: `📋 ${t.nav.finalFormComparison}`, icon: '📋' },
+    { id: 'breaking-changes', title: `🔴 ${t.nav.breakingChanges}`, icon: '🔴' },
   ];
 
   return (

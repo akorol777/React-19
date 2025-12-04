@@ -10,6 +10,7 @@ import { RefExample } from './components/RefExample';
 import { MetadataExample } from './components/MetadataExample';
 import { FinalFormComparison } from './components/FinalFormComparison';
 import { CompilerExample } from './components/CompilerExample';
+import { BreakingChangesExample } from './components/BreakingChangesExample';
 import styles from './App.module.scss';
 
 // Component that renders the appropriate example based on current view
@@ -41,6 +42,8 @@ const MainContent = () => {
         return <FinalFormComparison />;
       case 'compiler':
         return <CompilerExample />;
+      case 'breaking-changes':
+        return <BreakingChangesExample />;
       default:
         return <HomePage />;
     }
@@ -71,7 +74,7 @@ const App = () => {
           
           {/* Main content */}
           <MainContent />
-        </div>
+      </div>
       </AppProvider>
     </>
   );
